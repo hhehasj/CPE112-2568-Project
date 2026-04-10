@@ -1,3 +1,5 @@
+#ifndef QUEUE_H 
+#define QUEUE_H
 typedef struct {
     char name[50];
     int deadline;
@@ -12,3 +14,4 @@ typedef struct {
 void Initialize(task_queue *q);
 void Insert(task new_task, task_queue *q);
 task Extract(task_queue *q);
+#endif
