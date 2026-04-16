@@ -1,5 +1,5 @@
 RUN: main.o queue.o
-	gcc main.o queue.o -o RUN
+	gcc main.o queue.o undo.o -o RUN
 
 main.o: main.c
 	gcc -c main.c

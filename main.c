@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "queue.h"
+#include "undo.h"
 
 #define VERSION "1.2.0-priority"
 
@@ -35,6 +36,11 @@ int main(int argc, char *argv[]) {
 
     int choice;
     task temp;
+    struct Stack stk;
+    task_queue tq;
+
+    Initialize(&tq);
+    Initialize_Stack(&stk);
 
     while (1) {
         printf("\n--- Task Management System ---\n");
@@ -47,28 +53,35 @@ int main(int argc, char *argv[]) {
         }
         getchar();
 
-        /*
         switch (choice) {
+
             case 1:
                 printf("Enter task name: ");
                 fgets(temp.name, 50, stdin);
                 temp.name[strcspn(temp.name, "\n")] = 0;
+
                 printf("Priority (1-5): ");
                 scanf("%d", &temp.deadline);
-                if (Insert(temp)) pushUndo(temp);
+
+                Insert( temp, &tq );
+                push(&stk, temp);
+
                 break;
+
             case 2:
-                performUndo();
+                pop(&stk);
                 break;
-            case 3:
-                displaySchedule();
-                break;
+
+            // case 3:
+            //     displaySchedule();
+            //     break;
+
             case 4:
                 return 0;
+
             default:
                 printf("Try again.\n");
         }
-        */
     }
     return 0;
 }
