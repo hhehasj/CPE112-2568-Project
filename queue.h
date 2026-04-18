@@ -1,5 +1,6 @@
-#ifndef QUEUE_H 
+#ifndef QUEUE_H
 #define QUEUE_H
+
 typedef struct {
     char name[50];
     int deadline;
@@ -7,7 +8,7 @@ typedef struct {
 
 typedef struct {
     task tasks[100];
-    int size;        
+    int size;
 } task_queue;
 
 
