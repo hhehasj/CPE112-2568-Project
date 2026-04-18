@@ -1,0 +1,7 @@
+# Test files and binaries
+
+program.exe
+main.o
+queue.o
+undo.o
+RUN
