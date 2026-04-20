@@ -1,12 +1,13 @@
 #include "queue.h"
 #include <stdio.h>
+#include <string.h>
 
 void Initialize(task_queue *q){
     q->size = 0;
 }
 
 void Insert(task new_task, task_queue *q){
-    // printf("Inserting into queue\n"); For testing
+    printf("Inserting into queue\n"); // For testing
 
     if(q->size >= 100){
         printf("TASK OVERLOAD");
@@ -40,4 +41,29 @@ task Extract(task_queue *q) {
     }
     q->size--;
     return temp;
+}
+
+int Deletion(task_queue *q, task to_remove) {
+    if ( q->size == 0 ) {
+        printf("Task Queue Empty");
+        return -1;
+    }
+
+    task empty_task = {"", -1};
+
+    for (int i=0; i<q->size; i++ ) {
+        if ( strcmp(q->tasks[i].name, to_remove.name) == 0 && i != q->size-1 ) {
+
+            q->tasks[i] = empty_task;
+            // printf("Task: %s (has been deleted)\n", q->tasks[i].name); // For testing
+            //
+            for(int j=i; j<q->size-1; j++) {
+                q->tasks[j] = q->tasks[j+1];
+            }
+            q->size--;
+
+            return 0;
+        }
+    }
+    return -1;
 }

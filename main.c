@@ -36,11 +36,11 @@ int main(int argc, char *argv[]) {
 
     int choice;
     task temp;
-    struct Stack stk;
+    struct Stack undo_stk;
     task_queue tq;
 
     Initialize(&tq);
-    Initialize_Stack(&stk);
+    Initialize_Stack(&undo_stk);
 
     while (1) {
         printf("\n--- Task Management System ---\n");
@@ -64,16 +64,16 @@ int main(int argc, char *argv[]) {
                 scanf("%d", &temp.deadline);
 
                 Insert( temp, &tq );
-                push(&stk, temp);
+                push(&undo_stk, temp);
 
                 break;
 
             case 2:
-                pop(&stk);
+                Deletion(&tq, pop(&undo_stk));
                 break;
 
             // case 3:
-            //     displaySchedule();
+            //     displaySchedule(&tq, &undo_stk);
             //     break;
 
             case 4:
