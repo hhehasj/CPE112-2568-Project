@@ -1,5 +1,5 @@
-RUN: main.o queue.o
-	gcc main.o queue.o undo.o -o RUN
+systemc: main.o queue.o undo.o
+	gcc main.o queue.o undo.o -o systemc
 
 main.o: main.c
 	gcc -c main.c
