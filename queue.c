@@ -43,7 +43,7 @@ task Extract(task_queue *q) {
     return temp;
 }
 
-int Dequeue(task_queue *q, task to_remove) {
+int Deletion(task_queue *q, task to_remove) {
     if ( q->size == 0 ) {
         printf("Task Queue Empty");
         return -1;
@@ -52,12 +52,12 @@ int Dequeue(task_queue *q, task to_remove) {
     task empty_task = {"", -1};
 
     for (int i=0; i<q->size; i++ ) {
-        if ( strcmp(q->tasks[i].name, to_remove.name) == 0 ) {
+        if ( strcmp(q->tasks[i].name, to_remove.name) == 0 && i != q->size-1 ) {
 
             q->tasks[i] = empty_task;
             // printf("Task: %s (has been deleted)\n", q->tasks[i].name); // For testing
-
-            for(int j=i; j<q->size-i; j++) {
+            //
+            for(int j=i; j<q->size-1; j++) {
                 q->tasks[j] = q->tasks[j+1];
             }
             q->size--;

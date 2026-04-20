@@ -1,4 +1,3 @@
-#include <corecrt.h>
 #include <stdio.h>
 #include <string.h>
 #include "queue.h"
@@ -70,7 +69,7 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 2:
-                Dequeue(&tq, pop(&undo_stk));
+                Deletion(&tq, pop(&undo_stk));
                 break;
 
             // case 3:
