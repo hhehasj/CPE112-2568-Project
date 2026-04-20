@@ -16,6 +16,13 @@ void print_version() {
     printf("Task Scheduler Version: %s\n", VERSION);
 }
 
+void displaySchedule(task_queue *q) {
+    printf("TASKS \n");//TITLE
+    for(int i = 0; i < q->size ;i++) {
+        printf("%s\n",q->tasks[i].name);
+    }
+}
+
 int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
         if (argv[i][0] == '-') {
@@ -72,9 +79,9 @@ int main(int argc, char *argv[]) {
                 Deletion(&tq, pop(&undo_stk));
                 break;
 
-            // case 3:
-            //     displaySchedule(&tq, &undo_stk);
-            //     break;
+            case 3:
+                displaySchedule(&tq);
+                break;
 
             case 4:
                 return 0;
