@@ -1,9 +1,10 @@
 #ifndef QUEUE_H
 #define QUEUE_H
+#include<time.h>
 
 typedef struct {
     char name[50];
-    int deadline;
+    time_t deadline;
 } task;
 
 typedef struct {

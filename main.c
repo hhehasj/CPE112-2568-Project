@@ -16,6 +16,10 @@ void print_version() {
     printf("Task Scheduler Version: %s\n", VERSION);
 }
 
+// void displaySchedule(){
+//     char *readable_time = ctime(&tq.tasks[i].deadline);//For printing the time
+// }
+
 int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
         if (argv[i][0] == '-') {
@@ -58,14 +62,40 @@ int main(int argc, char *argv[]) {
             case 1:
                 printf("Enter task name: ");
                 fgets(temp.name, 50, stdin);
-                temp.name[strcspn(temp.name, "\n")] = 0;
+                temp.name[strcspn(temp.name, "\n")] = 0; 
 
-                printf("Priority (1-5): ");
-                scanf("%d", &temp.deadline);
 
-                Insert( temp, &tq );
+                time_t now = time(NULL);
+                struct tm *current_time = localtime(&now);
+
+
+                struct tm human_time = {0};
+                human_time.tm_year = current_time->tm_year; 
+
+
+                int input_month;
+
+                printf("--- Enter Deadline ---\n");
+                
+
+                printf("Month (1-12): ");
+                scanf("%d", &input_month);
+                human_time.tm_mon = input_month - 1;//Jan is 0
+
+                printf("Day (1-31): ");
+                scanf("%d", &human_time.tm_mday);
+
+                printf("Hour (0-23): ");
+                scanf("%d", &human_time.tm_hour);
+
+                temp.deadline = mktime(&human_time);//Convert 
+
+                while(getchar() != '\n'); 
+
+                Insert(temp, &tq);
                 push(&stk, temp);
 
+                printf("Task added to schedule!\n");
                 break;
 
             case 2:
@@ -74,6 +104,7 @@ int main(int argc, char *argv[]) {
 
             // case 3:
             //     displaySchedule();
+
             //     break;
 
             case 4:
