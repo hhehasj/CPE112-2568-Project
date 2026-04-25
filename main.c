@@ -23,7 +23,7 @@ void displaySchedule(task_queue *q) {
     printf("TASKS \n");//TITLE
 
     for(int i = 0; i < q->size ;i++) {
-        char *readable_time = ctime(&tq.tasks[i].deadline);
+        char *readable_time = ctime(&q.tasks[i].deadline);
         printf("%s --%s\n",q->tasks[i].name, readable_time);
     }
 }
