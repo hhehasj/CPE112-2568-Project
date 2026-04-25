@@ -19,6 +19,14 @@ void print_version() {
 // void displaySchedule(){
 //     char *readable_time = ctime(&tq.tasks[i].deadline);//For printing the time
 // }
+void displaySchedule(task_queue *q) {
+    printf("TASKS \n");//TITLE
+
+    for(int i = 0; i < q->size ;i++) {
+        char *readable_time = ctime(&tq.tasks[i].deadline);
+        printf("%s --%s\n",q->tasks[i].name, readable_time);
+    }
+}
 
 int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
@@ -40,11 +48,11 @@ int main(int argc, char *argv[]) {
 
     int choice;
     task temp;
-    struct Stack stk;
+    struct Stack undo_stk;
     task_queue tq;
 
     Initialize(&tq);
-    Initialize_Stack(&stk);
+    Initialize_Stack(&undo_stk);
 
     while (1) {
         printf("\n--- Task Management System ---\n");
@@ -95,17 +103,18 @@ int main(int argc, char *argv[]) {
                 Insert(temp, &tq);
                 push(&stk, temp);
 
+
                 printf("Task added to schedule!\n");
                 break;
 
             case 2:
-                pop(&stk);
+                Deletion(&tq, pop(&undo_stk));
                 break;
 
-            // case 3:
-            //     displaySchedule();
+            case 3:
+                displaySchedule();
 
-            //     break;
+                break;
 
             case 4:
                 return 0;

@@ -16,4 +16,5 @@ typedef struct {
 void Initialize(task_queue *q);
 void Insert(task new_task, task_queue *q);
 task Extract(task_queue *q);
+int Deletion(task_queue *q, task to_remove);
 #endif
