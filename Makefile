@@ -11,4 +11,4 @@ undo.o: undo.c undo.h
 	gcc -c undo.c
 
 clean:
-	rm *.o output
+	rm *.o output systemc
