@@ -3,7 +3,7 @@
 #include "queue.h"
 #include "undo.h"
 
-#define VERSION "1.2.0-priority"
+#define VERSION "0.2.0-tagging"
 
 void print_usage(char *prog_name) {
     printf("Usage: %s [OPTIONS]\n", prog_name);
