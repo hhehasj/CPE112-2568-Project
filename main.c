@@ -20,11 +20,11 @@ void print_version() {
 //     char *readable_time = ctime(&tq.tasks[i].deadline);//For printing the time
 // }
 void displaySchedule(task_queue *q) {
-    printf("TASKS \n");//TITLE
+    printf("TASKS \n"); //TITLE
 
     for(int i = 0; i < q->size ;i++) {
-        char *readable_time = ctime(&q.tasks[i].deadline);
-        printf("%s --%s\n",q->tasks[i].name, readable_time);
+        char *readable_time = ctime(&q->tasks[i].deadline);
+        printf("%s -- %s\n",q->tasks[i].name, readable_time);
     }
 }
 
@@ -56,7 +56,7 @@ int main(int argc, char *argv[]) {
 
     while (1) {
         printf("\n--- Task Management System ---\n");
-        printf("1. Add Task\n2. Undo\n3. Show Schedule\n4. Exit\nChoice: ");
+        printf("1. Add Task\n2. Undo\n3. Show Schedule\n4. Search by Tag\n5. Exit\nChoice: ");
 
         if (scanf("%d", &choice) != 1) {
             printf("Invalid input.\n");
@@ -70,21 +70,17 @@ int main(int argc, char *argv[]) {
             case 1:
                 printf("Enter task name: ");
                 fgets(temp.name, 50, stdin);
-                temp.name[strcspn(temp.name, "\n")] = 0; 
-
+                temp.name[strcspn(temp.name, "\n")] = 0;
 
                 time_t now = time(NULL);
                 struct tm *current_time = localtime(&now);
 
-
                 struct tm human_time = {0};
-                human_time.tm_year = current_time->tm_year; 
-
+                human_time.tm_year = current_time->tm_year;
 
                 int input_month;
 
                 printf("--- Enter Deadline ---\n");
-                
 
                 printf("Month (1-12): ");
                 scanf("%d", &input_month);
@@ -96,13 +92,17 @@ int main(int argc, char *argv[]) {
                 printf("Hour (0-23): ");
                 scanf("%d", &human_time.tm_hour);
 
-                temp.deadline = mktime(&human_time);//Convert 
+                temp.deadline = mktime(&human_time);//Convert
 
-                while(getchar() != '\n'); 
+                printf("Select Tag (0:Uncat, 1:Work, 2:Home, 3:Personal, 4:School): ");
+                int t;
+                scanf("%d", &t);
+                temp.tag = (t >= 0 && t <= 4) ? (Tag)t : UNCAT;
+
+                while(getchar() != '\n');
 
                 Insert(temp, &tq);
-                push(&stk, temp);
-
+                push(&undo_stk, temp);
 
                 printf("Task added to schedule!\n");
                 break;
@@ -112,11 +112,14 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 3:
-                displaySchedule();
-
+                displaySchedule(&tq);
                 break;
 
             case 4:
+                printf("didnt build yet");
+                break;
+
+            case 5:
                 return 0;
 
             default:

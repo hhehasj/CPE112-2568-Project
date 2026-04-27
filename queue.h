@@ -1,10 +1,13 @@
 #ifndef QUEUE_H
 #define QUEUE_H
-#include<time.h>
+#include <time.h>
+
+typedef enum { UNCAT = 0, WORK, HOME, PERSONAL, SCHOOL } Tag;
 
 typedef struct {
     char name[50];
     time_t deadline;
+    Tag tag;
 } task;
 
 typedef struct {
