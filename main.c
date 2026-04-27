@@ -16,17 +16,30 @@ void print_version() {
     printf("Task Scheduler Version: %s\n", VERSION);
 }
 
-// void displaySchedule(){
-//     char *readable_time = ctime(&tq.tasks[i].deadline);//For printing the time
-// }
-void displaySchedule(task_queue *q) {
-    printf("TASKS \n"); //TITLE
+// Functions for displaying schedule and tag search
+// If tag filter is -1, the display shows full tasks, for use in case 3
 
-    for(int i = 0; i < q->size ;i++) {
+void display(task_queue *q, Tag filter) {
+    if (filter == -1) {
+            printf("\n--- Full Task Schedule ---\n");
+        } else {
+            const char* tagNames[] = {"Uncategorized", "Work", "Home", "Personal", "School"};
+            printf("\n--- Task Filter View (Category: %s) ---\n", tagNames[filter]);
+        };
+
+    int found = 0;
+    for (int i = 0; i < q->size; i++) {
         char *readable_time = ctime(&q->tasks[i].deadline);
-        printf("%s -- %s\n",q->tasks[i].name, readable_time);
+        // If filter is -1, show all tasks
+        if (filter == -1 || q->tasks[i].tag == filter) {
+            printf("%s - Due: %s", q->tasks[i].name, readable_time);
+            found = 1;
+        }
     }
+    if (!found) printf("No tasks found for this category.\n");
 }
+
+// -----------
 
 int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
@@ -94,10 +107,10 @@ int main(int argc, char *argv[]) {
 
                 temp.deadline = mktime(&human_time);//Convert
 
-                printf("Select Tag (0:Uncat, 1:Work, 2:Home, 3:Personal, 4:School): ");
-                int t;
-                scanf("%d", &t);
-                temp.tag = (t >= 0 && t <= 4) ? (Tag)t : UNCAT;
+                int tag_input;
+                printf("Select Tag (0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School) :");
+                scanf("%d", &tag_input);
+                temp.tag = (tag_input >= 0 && tag_input <= 4) ? (Tag)tag_input : UNCAT;
 
                 while(getchar() != '\n');
 
@@ -112,18 +125,21 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 3:
-                displaySchedule(&tq);
+                display(&tq, -1);
                 break;
 
             case 4:
-                printf("didnt build yet");
+                printf("Filter by Tag [0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School]: ");
+                int filter;
+                scanf("%d", &filter);
+                display(&tq, filter);
                 break;
 
             case 5:
                 return 0;
 
             default:
-                printf("Try again.\n");
+                printf("Please try again.\n");
         }
     }
     return 0;
