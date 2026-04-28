@@ -52,7 +52,7 @@ int Deletion(task_queue *q, task to_remove) {
     task empty_task = {"", -1};
 
     for (int i=0; i<q->size; i++ ) {
-        if ( strcmp(q->tasks[i].name, to_remove.name) == 0 && i != q->size-1 ) {
+        if ( strcmp(q->tasks[i].name, to_remove.name) == 0) {
 
             q->tasks[i] = empty_task;
             // printf("Task: %s (has been deleted)\n", q->tasks[i].name); // For testing
