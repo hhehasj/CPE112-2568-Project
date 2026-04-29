@@ -8,8 +8,9 @@ void Initialize_Stack(struct Stack *stk) {
     stk->top = -1;
 }
 
+
 void push(struct Stack *stk, task newTask) {
-    // printf("Push to the Undo Stack\n\n"); // For Testing
+    printf("Pushed: %s\n", newTask.name); // For Testing
 
     if ( stk->top == MAX-1 ) {
         printf("Stack Overflow\n");
@@ -20,6 +21,7 @@ void push(struct Stack *stk, task newTask) {
     stk->tasks[stk->top] = newTask;
 }
 
+
 task pop(struct Stack *stk) {
     if ( stk->top == -1 ) {
         printf("Stack Underflow\n");
@@ -29,6 +31,6 @@ task pop(struct Stack *stk) {
 
     task popped = stk->tasks[stk->top];
     stk->top--;
-    // printf("Popping: %s\n", popped.name); // For testing
+    printf("Popping from stack: %s\n", popped.name); // For testing
     return popped;
 }

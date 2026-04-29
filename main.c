@@ -2,6 +2,7 @@
 #include <string.h>
 #include "queue.h"
 #include "undo.h"
+#include "txt_utils.h"
 
 #define VERSION "0.2.0-tagging"
 
@@ -60,12 +61,13 @@ int main(int argc, char *argv[]) {
     }
 
     int choice;
-    task temp;
+    task temp, task_to_delete;
     struct Stack undo_stk;
     task_queue tq;
 
     Initialize(&tq);
     Initialize_Stack(&undo_stk);
+    load_tasks(&tq);
 
     while (1) {
         printf("\n--- Task Management System ---\n");
@@ -116,12 +118,15 @@ int main(int argc, char *argv[]) {
 
                 Insert(temp, &tq);
                 push(&undo_stk, temp);
+                save_task(temp);
 
                 printf("Task added to schedule!\n");
                 break;
 
             case 2:
-                Deletion(&tq, pop(&undo_stk));
+                task_to_delete = pop(&undo_stk);
+                Deletion(&tq, task_to_delete);
+                remove_task(task_to_delete);
                 break;
 
             case 3:

@@ -7,7 +7,7 @@ void Initialize(task_queue *q){
 }
 
 void Insert(task new_task, task_queue *q){
-    printf("Inserting into queue\n"); // For testing
+    // printf("Inserting into queue\n"); // For testing
 
     if(q->size >= 100){
         printf("TASK OVERLOAD");
@@ -29,19 +29,20 @@ void Insert(task new_task, task_queue *q){
     q->size++;
 }
 
-task Extract(task_queue *q) {
-    if (q->size == 0) {
-        task empty_task = {"", -1};
-        return empty_task;
-    }
+// This might not be necessary
+// task Extract(task_queue *q) {
+//     if (q->size == 0) {
+//         task empty_task = {"", -1};
+//         return empty_task;
+//     }
 
-    task temp = q->tasks[0];
-    for(int i = 0; i < q->size-1; i++){
-        q->tasks[i] = q->tasks[i+1];
-    }
-    q->size--;
-    return temp;
-}
+//     task temp = q->tasks[0];
+//     for(int i = 0; i < q->size-1; i++){
+//         q->tasks[i] = q->tasks[i+1];
+//     }
+//     q->size--;
+//     return temp;
+// }
 
 int Deletion(task_queue *q, task to_remove) {
     if ( q->size == 0 ) {
@@ -52,11 +53,10 @@ int Deletion(task_queue *q, task to_remove) {
     task empty_task = {"", -1};
 
     for (int i=0; i<q->size; i++ ) {
-        if ( strcmp(q->tasks[i].name, to_remove.name) == 0) {
+        if ( strcmp(q->tasks[i].name, to_remove.name) == 0 ) {
 
+            printf("Task: %s (has been deleted)\n", q->tasks[i].name); // For testing
             q->tasks[i] = empty_task;
-            // printf("Task: %s (has been deleted)\n", q->tasks[i].name); // For testing
-            //
             for(int j=i; j<q->size-1; j++) {
                 q->tasks[j] = q->tasks[j+1];
             }
