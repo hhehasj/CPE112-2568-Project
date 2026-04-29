@@ -5,3 +5,4 @@ main.o
 queue.o
 undo.o
 systemc.exe
+tasks.txt

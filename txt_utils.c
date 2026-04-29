@@ -1,3 +1,4 @@
+#include "txt_utils.h"
 #include <stdio.h>
 #include "queue.h"
 #include <string.h>
@@ -10,7 +11,7 @@ void save_task(task new_task) {
     FILE *fileptr = fopen(TASKS_FILE, "a");
 
     if ( !fileptr ) {
-        printf("This file doesn't exist\n");
+        create_txtFile(fileptr);
         return;
     }
 
@@ -25,8 +26,8 @@ void remove_task(task task_to_remove) {
     FILE *original = fopen(TASKS_FILE, "r");
     FILE *temp = fopen("temp.txt", "w");
 
-    if ( !original || !temp ) {
-        printf("Either or both of these files do not exist.");
+    if ( !original ) {
+        create_txtFile(original);
         return;
     }
 
@@ -57,8 +58,8 @@ void remove_task(task task_to_remove) {
 void load_tasks(task_queue *q) {
     FILE *fileptr = fopen(TASKS_FILE, "r");
 
-    if ( fileptr == NULL ) {
-        printf("This file doesn't exists\n");
+    if ( !fileptr ) {
+        create_txtFile(fileptr);
         return;
     }
 
@@ -77,4 +78,31 @@ void load_tasks(task_queue *q) {
     }
 
     fclose(fileptr);
+}
+
+void create_txtFile(FILE *fileptr) {
+    printf("%s doesn't exist\n", TASKS_FILE);
+
+    char choice;
+    int created = 0;
+
+    while ( !created ) {
+        printf("Would you like to create a new one? (y/n): ");
+        scanf("%c", &choice);
+        if ( choice == 'y' || choice == 'Y' )  {
+
+            fileptr = fopen(TASKS_FILE, "w");
+            if ( fileptr ) {
+                printf("Successfully created file.\n");
+                created = 1;
+                fclose(fileptr);
+            }
+
+        } else if ( choice == 'n' || choice == 'N' ) {
+            printf("File was not created.\n");
+            created = 1;
+        } else {
+            printf("Invalid.\n");
+        }
+    }
 }
