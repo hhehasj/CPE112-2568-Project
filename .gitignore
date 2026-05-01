@@ -4,5 +4,6 @@ program.exe
 main.o
 queue.o
 undo.o
-systemc.exe
+txt_utils.o
+systemc
 tasks.txt
