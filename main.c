@@ -31,7 +31,7 @@ void display(task_queue *q, Tag filter) {
         char *readable_time = ctime(&q->tasks[i].deadline);
         // If filter is -1, show all tasks
         if (filter == -1 || q->tasks[i].tag == filter) {
-            printf("%s - Due: %s", q->tasks[i].name, readable_time);
+            printf("%s - Due: %s\n", q->tasks[i].name, readable_time);
             found = 1;
         }
     }
@@ -95,7 +95,7 @@ int main(int argc, char *argv[]) {
 
                 printf("Month (1-12): ");
                 scanf("%d", &input_month);
-                human_time.tm_mon = input_month - 1;//Jan is 0
+                human_time.tm_mon = input_month - 1; //Jan is 0
 
                 printf("Day (1-31): ");
                 scanf("%d", &human_time.tm_mday);
@@ -103,7 +103,7 @@ int main(int argc, char *argv[]) {
                 printf("Hour (0-23): ");
                 scanf("%d", &human_time.tm_hour);
 
-                temp.deadline = mktime(&human_time);//Convert
+                temp.deadline = mktime(&human_time); //Convert
 
                 int tag_input;
                 printf("Select Tag (0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School) :");
@@ -113,10 +113,11 @@ int main(int argc, char *argv[]) {
                 while(getchar() != '\n');
 
                 Insert(temp, &tq);
+                printf("Task added to schedule!\n");
+
                 push(&undo_stk, temp);
                 save_task(temp);
 
-                printf("Task added to schedule!\n");
                 break;
 
             case 2:
@@ -137,7 +138,6 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 5:
-                // GOOD HABIT: Clean up dynamic memory before returning control to the OS
                 Free_Queue(&tq);
                 Free_Stack(&undo_stk);
                 return 0;
@@ -146,8 +146,8 @@ int main(int argc, char *argv[]) {
                 printf("Please try again.\n");
         }
     }
-    
-    // Catch-all cleanup just in case the loop breaks unexpectedly
+
+    // In case the loop breaks unexpectedly
     Free_Queue(&tq);
     Free_Stack(&undo_stk);
     return 0;

@@ -4,14 +4,14 @@
 #include "queue.h"
 
 struct Stack {
-    task *tasks;  // Changed from fixed array to dynamic pointer
+    task *tasks;
     int top;
-    int capacity; // Added to track allocated memory size
+    int capacity;
 };
 
 void Initialize_Stack(struct Stack *stk);
 void push(struct Stack *stk, task newTask);
 task pop(struct Stack *stk);
-void Free_Stack(struct Stack *stk); // Call this before program ends
+void Free_Stack(struct Stack *stk);
 
 #endif

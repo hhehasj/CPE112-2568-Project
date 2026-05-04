@@ -1,13 +1,13 @@
 #include "queue.h"
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h> // Required for malloc/realloc/free
+#include <stdlib.h>
 
 void Initialize(task_queue *q){
     q->size = 0;
     q->capacity = 10; // Start with a small default capacity
     q->tasks = (task*)malloc(q->capacity * sizeof(task));
-    
+
     if (q->tasks == NULL) {
         printf("Memory allocation failed!\n");
     }
@@ -18,7 +18,7 @@ void Insert(task new_task, task_queue *q){
     if(q->size >= q->capacity){
         q->capacity *= 2;
         q->tasks = (task*)realloc(q->tasks, q->capacity * sizeof(task));
-        
+
         if (q->tasks == NULL) {
             printf("Memory reallocation failed!\n");
             return;
@@ -35,6 +35,7 @@ void Insert(task new_task, task_queue *q){
         }
     }
 
+    // printf("Task added: %s\n", new_task.name); // Testing
     q->tasks[i+1] = new_task;
     q->size++;
 }
@@ -63,12 +64,12 @@ int Deletion(task_queue *q, task to_remove) {
 
     for (int i=0; i<q->size; i++ ) {
         if ( strcmp(q->tasks[i].name, to_remove.name) == 0 ) {
-            printf("Task: %s (has been deleted)\n", q->tasks[i].name); 
-            
+            printf("Task: %s (has been deleted)\n", q->tasks[i].name);
+
             for(int j=i; j<q->size-1; j++) {
                 q->tasks[j] = q->tasks[j+1];
             }
-            
+
             // Clear the last duplicate item and shrink size
             q->tasks[q->size - 1] = empty_task;
             q->size--;

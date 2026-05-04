@@ -1,25 +1,25 @@
 #include "undo.h"
 #include <stdio.h>
-#include <stdlib.h> // Required for malloc/realloc/free
+#include <stdlib.h>
 
 void Initialize_Stack(struct Stack *stk) {
     stk->top = -1;
     stk->capacity = 10; // Start with a small default capacity
     stk->tasks = (task*)malloc(stk->capacity * sizeof(task));
-    
+
     if (stk->tasks == NULL) {
         printf("Memory allocation failed!\n");
     }
 }
 
 void push(struct Stack *stk, task newTask) {
-    printf("Pushed: %s\n", newTask.name); 
+    // printf("Pushed: %s\n", newTask.name); // Testing
 
     // If stack is full, double its capacity dynamically
     if ( stk->top == stk->capacity - 1 ) {
         stk->capacity *= 2;
         stk->tasks = (task*)realloc(stk->tasks, stk->capacity * sizeof(task));
-        
+
         if (stk->tasks == NULL) {
             printf("Memory reallocation failed!\n");
             return;
@@ -39,7 +39,7 @@ task pop(struct Stack *stk) {
 
     task popped = stk->tasks[stk->top];
     stk->top--;
-    printf("Popping from stack: %s\n", popped.name); 
+    // printf("Popping from stack: %s\n", popped.name); // Testing
     return popped;
 }
 

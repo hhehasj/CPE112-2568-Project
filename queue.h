@@ -11,9 +11,9 @@ typedef struct {
 } task;
 
 typedef struct {
-    task *tasks;    // Changed from fixed array to dynamic pointer
+    task *tasks;
     int size;
-    int capacity;   // Added to track allocated memory size
+    int capacity;
 } task_queue;
 
 void Initialize(task_queue *q);

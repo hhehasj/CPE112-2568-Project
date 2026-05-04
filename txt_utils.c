@@ -15,7 +15,7 @@ void save_task(task new_task) {
         return;
     }
 
-    printf("Saving to file: %s\n", new_task.name);
+    printf("Saved to file: %s\n", new_task.name);
     fprintf(fileptr, "%s,%ld,%d\n", new_task.name, (long)new_task.deadline, new_task.tag);
 
     fclose(fileptr);
@@ -63,17 +63,17 @@ void load_tasks(task_queue *q) {
         return;
     }
 
-    printf("Loading tasks from file\n");
-
     char line[1024];
     while ( fgets(line, sizeof(line), fileptr ) ) {
 
         task inserted_task;
-        long timestamp;
+        long temp_deadline;
         int tag_num, index = 0;
 
-        if ( sscanf(line, "%499[^,],%ld,%d", inserted_task.name, &inserted_task.deadline, &inserted_task.tag) == 3 ) {
+        if ( sscanf(line, "%499[^,],%ld,%d", inserted_task.name, &temp_deadline, &inserted_task.tag) == 3 ) {
+            inserted_task.deadline = (time_t)temp_deadline;
             Insert(inserted_task, q);
+            printf("Tasks from file successfully loaded\n");
         }
     }
 
