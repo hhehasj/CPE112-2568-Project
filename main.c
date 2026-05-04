@@ -89,21 +89,52 @@ int main(int argc, char *argv[]) {
                 struct tm human_time = {0};
                 human_time.tm_year = current_time->tm_year;
 
-                int input_month;
-
+                int input_month, valid = 0;
                 printf("--- Enter Deadline ---\n");
 
-                printf("Month (1-12): ");
-                scanf("%d", &input_month);
-                human_time.tm_mon = input_month - 1; //Jan is 0
+                while (!valid) {
+                    do {
 
-                printf("Day (1-31): ");
-                scanf("%d", &human_time.tm_mday);
+                        printf("Month (1-12): ");
+                        if ( scanf("%d", &input_month) != 1 || input_month < 1 || input_month > 12 ) {
+                            while(getchar() != '\n'); // Clear buffer
+                        } else {
+                            human_time.tm_mon = input_month - 1;
+                            break;
+                        }
 
-                printf("Hour (0-23): ");
-                scanf("%d", &human_time.tm_hour);
+                    } while (1);
 
-                temp.deadline = mktime(&human_time); //Convert
+                    do {
+
+                        printf("Day (1-31): ");
+                        if (scanf("%d", &human_time.tm_mday) != 1 || human_time.tm_mday < 1 || human_time.tm_mday > 31) {
+                            while(getchar() != '\n');
+                        } else {
+                            break;
+                        }
+
+                    } while (1);
+
+                    do {
+
+                        printf("Hour (0-23): ");
+                        if (scanf("%d", &human_time.tm_hour) != 1 || human_time.tm_hour < 0 || human_time.tm_hour > 23) {
+                            while(getchar() != '\n');
+                        } else {
+                            break;
+                        }
+
+                    } while (1);
+
+                    temp.deadline = mktime(&human_time);
+
+                    if (temp.deadline == -1) {
+                        printf("Error: The date entered is invalid. Please try again.\n");
+                    } else {
+                        valid = 1; // Exit the main loop
+                    }
+                }
 
                 int tag_input;
                 printf("Select Tag (0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School) :");
@@ -134,6 +165,10 @@ int main(int argc, char *argv[]) {
                 printf("Filter by Tag [0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School]: ");
                 int filter;
                 scanf("%d", &filter);
+                while ( scanf("%d", &filter) != 1 || filter < 0 || filter > 4 ) {
+                    printf("Filter by Tag [0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School]: ");
+                    while ( getchar() != '\n' );
+                }
                 display(&tq, filter);
                 break;
 
