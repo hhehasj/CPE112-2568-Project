@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <time.h> // Added because ctime() is used in display()
 #include "queue.h"
 #include "undo.h"
 #include "txt_utils.h"
@@ -9,16 +10,13 @@
 void print_usage(char *prog_name) {
     printf("Usage: %s [OPTIONS]\n", prog_name);
     printf("Options:\n");
-    printf("  -h, --help     Show this help message\n");
+    printf("  -h, --help    Show this help message\n");
     printf("  -v, --version  Show version information\n");
 }
 
 void print_version() {
     printf("Task Scheduler Version: %s\n", VERSION);
 }
-
-// Functions for displaying schedule and tag search
-// If tag filter is -1, the display shows full tasks, for use in case 3
 
 void display(task_queue *q, Tag filter) {
     if (filter == -1) {
@@ -39,8 +37,6 @@ void display(task_queue *q, Tag filter) {
     }
     if (!found) printf("No tasks found for this category.\n");
 }
-
-// -----------
 
 int main(int argc, char *argv[]) {
     for (int i = 1; i < argc; i++) {
@@ -141,11 +137,18 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 5:
+                // GOOD HABIT: Clean up dynamic memory before returning control to the OS
+                Free_Queue(&tq);
+                Free_Stack(&undo_stk);
                 return 0;
 
             default:
                 printf("Please try again.\n");
         }
     }
+    
+    // Catch-all cleanup just in case the loop breaks unexpectedly
+    Free_Queue(&tq);
+    Free_Stack(&undo_stk);
     return 0;
 }
