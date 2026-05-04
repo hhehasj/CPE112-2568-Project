@@ -164,7 +164,6 @@ int main(int argc, char *argv[]) {
             case 4:
                 printf("Filter by Tag [0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School]: ");
                 int filter;
-                scanf("%d", &filter);
                 while ( scanf("%d", &filter) != 1 || filter < 0 || filter > 4 ) {
                     printf("Filter by Tag [0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School]: ");
                     while ( getchar() != '\n' );
