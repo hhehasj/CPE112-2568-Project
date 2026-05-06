@@ -40,20 +40,6 @@ void Insert(task new_task, task_queue *q){
     q->size++;
 }
 
-task Extract(task_queue *q) {
-    if (q->size == 0) {
-        task empty_task = {"", -1, UNCAT};
-        return empty_task;
-    }
-
-    task temp = q->tasks[0];
-    for(int i = 0; i < q->size-1; i++){
-        q->tasks[i] = q->tasks[i+1];
-    }
-    q->size--;
-    return temp;
-}
-
 int Deletion(task_queue *q, task to_remove) {
     if ( q->size == 0 ) {
         printf("Task Queue Empty\n");
