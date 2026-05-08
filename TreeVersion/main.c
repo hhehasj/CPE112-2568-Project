@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
-#include <time.h> // Added because ctime() is used in display()
-#include "queue.h"
+#include <time.h>
+#include "tree.h"
 #include "undo.h"
 #include "txt_utils.h"
 
@@ -18,23 +18,44 @@ void print_version() {
     printf("Task Scheduler Version: %s\n", VERSION);
 }
 
-void display(task_queue *q, Tag filter) {
+void traverse_tree(struct task_tree *root, Tag filter, int *found) {
+    if ( root == NULL )  {
+        return;
+    }
+
+    traverse_tree(root->left, filter, found);
+
+    if ( filter == -1 || root->tasks->tag == filter ) {
+        char *readable_time = ctime(&root->tasks->deadline);
+        printf("%s - Due: %s\n", root->tasks->name, readable_time);
+        *found = 1;
+    }
+
+    traverse_tree(root->right, filter, found);
+
+}
+void display(struct task_tree *root, Tag filter) {
+    if ( root == NULL ) {
+        return;
+    }
+
     if (filter == -1) {
             printf("\n--- Full Task Schedule ---\n");
-        } else {
-            const char* tagNames[] = {"Uncategorized", "Work", "Home", "Personal", "School"};
-            printf("\n--- Task Filter View (Category: %s) ---\n", tagNames[filter]);
-        };
+    } else {
+        const char* tagNames[] = {"Uncategorized", "Work", "Home", "Personal", "School"};
+        printf("\n--- Task Filter View (Category: %s) ---\n", tagNames[filter]);
+    };
 
     int found = 0;
-    for (int i = 0; i < q->size; i++) {
-        char *readable_time = ctime(&q->tasks[i].deadline);
-        // If filter is -1, show all tasks
-        if (filter == -1 || q->tasks[i].tag == filter) {
-            printf("%s - Due: %s\n", q->tasks[i].name, readable_time);
-            found = 1;
-        }
-    }
+
+    // char *readable_time = ctime(&root->tasks[i].deadline);
+    // // If filter is -1, show all tasks
+    // if (filter == -1 || root->tasks[i].tag == filter) {
+    //     printf("%s - Due: %s\n", root->tasks[i].name, readable_time);
+    //     found = 1;
+    // }
+    traverse_tree(root, filter, &found);
+
     if (!found) printf("No tasks found for this category.\n");
 }
 
@@ -59,11 +80,10 @@ int main(int argc, char *argv[]) {
     int choice;
     task temp, task_to_delete;
     struct Stack undo_stk;
-    task_queue tq;
+    struct task_tree *root = NULL;
 
-    Initialize(&tq);
     Initialize_Stack(&undo_stk);
-    load_tasks(&tq);
+    load_tasks(&root);
 
     while (1) {
         printf("\n--- Task Management System ---\n");
@@ -143,7 +163,7 @@ int main(int argc, char *argv[]) {
 
                 while(getchar() != '\n');
 
-                Insert(temp, &tq);
+                Insert(&temp, &root);
                 printf("Task added to schedule!\n");
 
                 push(&undo_stk, temp);
@@ -153,12 +173,12 @@ int main(int argc, char *argv[]) {
 
             case 2:
                 task_to_delete = pop(&undo_stk);
-                Deletion(&tq, task_to_delete);
+                Deletion(&root, task_to_delete);
                 remove_task(task_to_delete);
                 break;
 
             case 3:
-                display(&tq, -1);
+                display(root, -1);
                 break;
 
             case 4:
@@ -168,11 +188,11 @@ int main(int argc, char *argv[]) {
                     printf("Filter by Tag [0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School]: ");
                     while ( getchar() != '\n' );
                 }
-                display(&tq, filter);
+                display(root, filter);
                 break;
 
             case 5:
-                Free_Queue(&tq);
+                Free_Tree(root);
                 Free_Stack(&undo_stk);
                 return 0;
 
@@ -182,7 +202,7 @@ int main(int argc, char *argv[]) {
     }
 
     // In case the loop breaks unexpectedly
-    Free_Queue(&tq);
+    Free_Tree(root);
     Free_Stack(&undo_stk);
     return 0;
 }

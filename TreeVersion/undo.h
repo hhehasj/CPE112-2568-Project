@@ -1,7 +1,7 @@
 #ifndef UNDO_H
 #define UNDO_H
 
-#include "queue.h"
+#include "tree.h"
 
 struct Stack {
     task *tasks;

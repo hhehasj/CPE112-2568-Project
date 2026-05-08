@@ -1,6 +1,6 @@
 #include "txt_utils.h"
 #include <stdio.h>
-#include "queue.h"
+#include "tree.h"
 #include <string.h>
 #include <time.h>
 
@@ -55,7 +55,7 @@ void remove_task(task task_to_remove) {
 }
 
 
-void load_tasks(task_queue *q) {
+void load_tasks(struct task_tree **root) {
     FILE *fileptr = fopen(TASKS_FILE, "r");
 
     if ( !fileptr ) {
@@ -72,7 +72,7 @@ void load_tasks(task_queue *q) {
 
         if ( sscanf(line, "%499[^,],%ld,%d", inserted_task.name, &temp_deadline, &inserted_task.tag) == 3 ) {
             inserted_task.deadline = (time_t)temp_deadline;
-            Insert(inserted_task, q);
+            Insert(&inserted_task, root);
             printf("Tasks from file successfully loaded\n");
         }
     }

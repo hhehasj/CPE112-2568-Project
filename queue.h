@@ -11,15 +11,14 @@ typedef struct {
 } task;
 
 typedef struct {
-    task *tasks;    // Changed from fixed array to dynamic pointer
+    task *tasks;
     int size;
-    int capacity;   // Added to track allocated memory size
+    int capacity;
 } task_queue;
 
 void Initialize(task_queue *q);
 void Insert(task new_task, task_queue *q);
-task Extract(task_queue *q);
 int Deletion(task_queue *q, task to_remove);
-void Free_Queue(task_queue *q); // Call this before program ends
+void Free_Queue(task_queue *q);
 
 #endif
