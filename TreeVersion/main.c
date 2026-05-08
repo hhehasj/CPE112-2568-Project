@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <time.h> // Added because ctime() is used in display()
+#include <time.h>
 #include "tree.h"
 #include "undo.h"
 #include "txt_utils.h"
@@ -18,6 +18,22 @@ void print_version() {
     printf("Task Scheduler Version: %s\n", VERSION);
 }
 
+void traverse_tree(struct task_tree *root, Tag filter, int *found) {
+    if ( root == NULL )  {
+        return;
+    }
+
+    traverse_tree(root->left, filter, found);
+
+    if ( filter == -1 || root->tasks->tag == filter ) {
+        char *readable_time = ctime(&root->tasks->deadline);
+        printf("%s - Due: %s\n", root->tasks->name, readable_time);
+        *found = 1;
+    }
+
+    traverse_tree(root->right, filter, found);
+
+}
 void display(struct task_tree *root, Tag filter) {
     if ( root == NULL ) {
         return;
@@ -30,7 +46,7 @@ void display(struct task_tree *root, Tag filter) {
         printf("\n--- Task Filter View (Category: %s) ---\n", tagNames[filter]);
     };
 
-    // int found = 0;
+    int found = 0;
 
     // char *readable_time = ctime(&root->tasks[i].deadline);
     // // If filter is -1, show all tasks
@@ -38,17 +54,9 @@ void display(struct task_tree *root, Tag filter) {
     //     printf("%s - Due: %s\n", root->tasks[i].name, readable_time);
     //     found = 1;
     // }
-    display(root->left, filter);
+    traverse_tree(root, filter, &found);
 
-    // char *readable_time = ctime(root->tasks->deadline)
-    if ( filter == -1 || root->tasks->tag == filter ) {
-        char *readable_time = ctime(&root->tasks->deadline);
-        printf("%s - Due: %s\n", root->tasks->name, readable_time);
-    }
-
-    display(root->right, filter);
-
-    // if (!found) printf("No tasks found for this category.\n");
+    if (!found) printf("No tasks found for this category.\n");
 }
 
 int main(int argc, char *argv[]) {

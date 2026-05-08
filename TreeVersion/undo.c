@@ -32,7 +32,7 @@ void push(struct Stack *stk, task newTask) {
 
 task pop(struct Stack *stk) {
     if ( stk->top == -1 ) {
-        printf("Stack Underflow\n");
+        printf("No changes occured\n");
         task empty = {.deadline = 0, .name = "", .tag = UNCAT};
         return empty;
     }
