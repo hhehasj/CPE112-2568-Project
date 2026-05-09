@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <string.h>
-#include <time.h> // Added because ctime() is used in display()
+#include <time.h>
 #include "queue.h"
 #include "undo.h"
 #include "txt_utils.h"
@@ -66,7 +66,7 @@ int main(int argc, char *argv[]) {
     load_tasks(&tq);
 
     while (1) {
-        printf("\n--- Task Management System ---\n");
+        printf("\n--- systemc - Task Management System ---\n");
         printf("1. Add Task\n2. Undo\n3. Show Schedule\n4. Search by Tag\n5. Exit\nChoice: ");
 
         if (scanf("%d", &choice) != 1) {
