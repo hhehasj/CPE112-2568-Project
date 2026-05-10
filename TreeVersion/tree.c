@@ -1,35 +1,7 @@
 #include "tree.h"
 #include <stdlib.h>
-// #include <string.h>
 
 void Insert(task *new_task, struct task_tree **root){
-    // ------------------------------OLD----------------------------------
-    // If the array is full, double its capacity dynamically
-    // if(q->size >= q->capacity){
-    //     q->capacity *= 2;
-    //     q->tasks = (task*)realloc(q->tasks, q->capacity * sizeof(task));
-
-    //     if (q->tasks == NULL) {
-    //         printf("Memory reallocation failed!\n");
-    //         return;
-    //     }
-    // }
-
-    // int i = q->size-1;
-    // while(i >= 0){
-    //     if (new_task.deadline < q->tasks[i].deadline) {
-    //         q->tasks[i + 1] = q->tasks[i];
-    //         i--;
-    //     } else {
-    //         break;
-    //     }
-    // }
-
-    // printf("Task added: %s\n", new_task.name); // Testing
-    // q->tasks[i+1] = new_task;
-    // q->size++;
-    // ----------------------------OLD------------------------------------
-
     if ( *root == NULL ) {
         struct task_tree *newNode = (struct task_tree *)malloc(sizeof(struct task_tree));
 
@@ -58,31 +30,6 @@ struct task_tree* inorder_successor(struct task_tree *root) {
 }
 
 void Deletion(struct task_tree **root, task to_remove) {
-    // ------------------------------OLD----------------------------------
-    // if ( root->size == 0 ) {
-    //     printf("Task Queue Empty\n");
-    //     return -1;
-    // }
-
-    // task empty_task = {"", -1, UNCAT};
-
-    // for (int i=0; i<root->size; i++ ) {
-    //     if ( strcmp(root->tasks[i].name, to_remove.name) == 0 ) {
-    //         printf("Task: %s (has been deleted)\n", root->tasks[i].name);
-
-    //         for(int j=i; j<root->size-1; j++) {
-    //             root->tasks[j] = root->tasks[j+1];
-    //         }
-
-    //         // Clear the last duplicate item and shrink size
-    //         root->tasks[root->size - 1] = empty_task;
-    //         root->size--;
-
-    //         return 0;
-    //     }
-    // }
-    // return -1;
-    // ----------------------------OLD------------------------------------
     if ( *root == NULL ) {
         return;
     }
@@ -113,12 +60,6 @@ void Deletion(struct task_tree **root, task to_remove) {
 }
 
 void Free_Tree(struct task_tree *root) {
-    // ------------------------------OLD----------------------------------
-    // free(root->tasks);
-    // root->tasks = NULL;
-    // root->size = 0;
-    // root->capacity = 0;
-    // ----------------------------OLD------------------------------------
     if ( root == NULL ) {
         return;
     }

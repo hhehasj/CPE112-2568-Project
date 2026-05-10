@@ -1,0 +1,500 @@
+Load the dishwasher,1796936400,4
+Play video games,1782961200,4
+Sweep the kitchen floor,1780257600,1
+Write in my journal,1786132800,1
+Vacuum living room floor,1769565600,2
+Make tea,1792825200,0
+Mop the living room floor,1784199600,4
+Wash dishes,1797076800,4
+Mop the living room floor,1776088800,3
+Play soccer,1792792800,3
+Windex mirrors,1789912800,2
+Vacuum living room floor,1796666400,3
+Unload the dishwasher,1798282800,3
+Scrub bathtub,1778835600,3
+Scrub bathtub,1792375200,0
+Talk with people,1783562400,3
+Hang clothes,1798513200,1
+Do assignments,1796011200,3
+Read the Bible,1776081600,2
+Play video games,1772762400,1
+Wipe down the countertops,1797850800,4
+Mop the bathroom floor,1791885600,1
+Sweep the kitchen floor,1781686800,0
+Vacuum living room floor,1781229600,2
+Squeegeeing the windows,1784264400,0
+Play basketball,1776096000,2
+Play soccer,1794776400,1
+Scrub bathtub,1777420800,2
+Play basketball,1796803200,0
+Dusting surfaces,1771970400,3
+Wash dishes,1794322800,3
+Do assignments,1768129200,0
+Sweep the living room,1796378400,3
+Read the book,1786474800,0
+Make coffee,1789246800,1
+Sweep the kitchen floor,1768194000,4
+Write in my journal,1784764800,3
+Squeegeeing the windows,1767744000,2
+Unload the dishwasher,1770206400,2
+Take a nap,1784095200,4
+Hang clothes,1790366400,0
+Sweep the kitchen floor,1788102000,3
+Play video games,1779012000,4
+Do assignments,1777212000,3
+Scrub sinks,1776700800,3
+Sweep the living room,1784178000,1
+Vacuum the bedroom floor,1782716400,4
+Wash hands,1767236400,2
+Read the Bible,1798192800,3
+Write in my journal,1775854800,1
+Remove cobwebs,1785484800,3
+Talk with people,1795147200,3
+Remove shoes,1783270800,1
+Take out trash,1774072800,4
+Read the book,1769205600,0
+Read the Bible,1790798400,4
+Remove shoes,1768053600,0
+Wipe down the countertops,1794726000,0
+Make tea,1793887200,2
+Wash dishes,1781604000,4
+Go to sleep,1791867600,0
+Play basketball,1774548000,2
+Windex mirrors,1768788000,4
+Write in my journal,1787097600,4
+Vacuum living room floor,1772172000,3
+Vacuum living room floor,1792393200,0
+Vacuum the bedroom floor,1795561200,4
+Write in my journal,1790362800,3
+Fold laundry,1788156000,2
+Vacuum the bedroom floor,1789984800,1
+Windex mirrors,1795618800,1
+Take out trash,1768068000,1
+Wash hands,1773428400,4
+Buy grocery,1769608800,4
+Scrub bathtub,1772503200,1
+Play basketball,1796000400,3
+Vacuum living room floor,1781107200,2
+Vacuum living room floor,1781290800,4
+Talk with people,1772899200,3
+Go to sleep,1798239600,2
+Take a nap,1774645200,2
+Remove shoes,1784325600,2
+Remove cobwebs,1787536800,3
+Take a bath,1787781600,1
+Play chess,1769076000,0
+Write in my journal,1789801200,1
+Play video games,1780102800,3
+Unload the dishwasher,1774958400,3
+Take a nap,1789704000,0
+Scrub bathtub,1790208000,4
+Mop the living room floor,1770735600,3
+Sweep the living room,1787497200,3
+Wash hands,1790442000,4
+Scrub bathtub,1778792400,1
+Unload the dishwasher,1782273600,1
+Dusting surfaces,1785906000,4
+Vacuum the bedroom floor,1795392000,2
+Read the Bible,1792648800,3
+Remove shoes,1789959600,3
+Scrub bathtub,1782388800,0
+Scrub bathtub,1777755600,0
+Read the Bible,1787169600,2
+Wash hands,1780232400,3
+Take a nap,1789887600,4
+Sweep the living room,1771383600,0
+Windex mirrors,1782212400,4
+Read the book,1778763600,2
+Vacuum the bedroom floor,1780855200,0
+Do laundry,1767546000,0
+Unload the dishwasher,1788091200,1
+Play video games,1794031200,1
+Talk with people,1785106800,2
+Remove shoes,1777600800,1
+Go to sleep,1770472800,1
+Play chess,1782525600,4
+Sweep the kitchen floor,1785862800,0
+Wipe down the countertops,1784559600,4
+Take a bath,1771333200,3
+Read the book,1797163200,2
+Scrub bathtub,1786521600,2
+Unload the dishwasher,1787126400,4
+Load the dishwasher,1781521200,4
+Sweep the kitchen floor,1786546800,4
+Vacuum living room floor,1771970400,4
+Squeegeeing the windows,1770573600,2
+Do assignments,1782108000,1
+Fold laundry,1777532400,1
+Hang clothes,1767546000,3
+Take a bath,1772215200,0
+Squeegeeing the windows,1774144800,2
+Play video games,1798300800,0
+Take out trash,1782439200,4
+Talk with people,1770721200,1
+Go to sleep,1767715200,4
+Do laundry,1793426400,3
+Play basketball,1777093200,2
+Make coffee,1768737600,2
+Vacuum living room floor,1782309600,4
+Sweep the kitchen floor,1780574400,3
+Remove cobwebs,1769072400,4
+Scrub bathtub,1777842000,0
+Remove cobwebs,1784217600,2
+Wash dishes,1797552000,1
+Wipe down the countertops,1794016800,0
+Unload the dishwasher,1784944800,1
+Vacuum the bedroom floor,1785020400,0
+Write in my journal,1777129200,3
+Buy grocery,1767960000,4
+Buy grocery,1796086800,1
+Do laundry,1781193600,0
+Dusting surfaces,1789362000,0
+Scrub bathtub,1793556000,3
+Unload the dishwasher,1779926400,0
+Scrub sinks,1792771200,2
+Scrub bathtub,1780581600,3
+Write in my journal,1775980800,2
+Take a nap,1777312800,3
+Replace hand towels,1788732000,3
+Scrub bathtub,1789124400,4
+Buy grocery,1794690000,2
+Remove cobwebs,1798196400,0
+Squeegeeing the windows,1771923600,3
+Windex mirrors,1797606000,4
+Hang clothes,1774180800,0
+Wash hands,1781341200,4
+Vacuum living room floor,1769832000,3
+Play video games,1788253200,1
+Remove cobwebs,1769979600,0
+Play video games,1777644000,0
+Wash dishes,1767366000,4
+Scrub bathtub,1777993200,2
+Wash hands,1776322800,1
+Play chess,1787713200,0
+Vacuum the bedroom floor,1795874400,3
+Do assignments,1769583600,3
+Do laundry,1787155200,1
+Read the Bible,1768111200,4
+Mop the bathroom floor,1777590000,3
+Read the Bible,1797786000,3
+Play soccer,1775142000,1
+Take a nap,1768226400,4
+Vacuum the bedroom floor,1773216000,4
+Take out trash,1775448000,1
+Hang clothes,1792198800,2
+Sweep the kitchen floor,1780495200,2
+Scrub bathtub,1782396000,4
+Sweep the living room,1771826400,0
+Buy grocery,1770606000,0
+Wash hands,1789977600,0
+Wash hands,1782997200,3
+Wash dishes,1795878000,4
+Talk with people,1779667200,1
+Take a nap,1798570800,3
+Play soccer,1772312400,4
+Wipe down the countertops,1768489200,3
+Wipe down the countertops,1778641200,0
+Dusting surfaces,1772179200,3
+Play basketball,1780621200,0
+Take a bath,1780786800,4
+Fold laundry,1783746000,4
+Play basketball,1779267600,1
+Wipe down the countertops,1785186000,1
+Remove cobwebs,1798635600,0
+Take a bath,1791338400,4
+Windex mirrors,1776333600,4
+Remove shoes,1792368000,1
+Replace hand towels,1779159600,2
+Wash hands,1792573200,0
+Do assignments,1771909200,0
+Mop the living room floor,1789311600,0
+Take out trash,1789952400,1
+Replace hand towels,1797966000,4
+Load the dishwasher,1788595200,3
+Mop the living room floor,1784289600,3
+Take a bath,1779530400,3
+Remove cobwebs,1783634400,0
+Wipe down the countertops,1796112000,3
+Remove cobwebs,1769814000,4
+Talk with people,1769403600,0
+Vacuum living room floor,1773997200,2
+Play video games,1770321600,1
+Take a bath,1793415600,4
+Scrub bathtub,1789675200,2
+Hang clothes,1797588000,4
+Do laundry,1793790000,3
+Buy grocery,1794427200,0
+Wipe down the countertops,1787446800,4
+Play video games,1781100000,2
+Wash hands,1790431200,0
+Load the dishwasher,1783807200,0
+Vacuum living room floor,1778972400,3
+Talk with people,1784246400,4
+Hang clothes,1791464400,2
+Remove shoes,1789837200,3
+Vacuum living room floor,1780898400,2
+Take a bath,1768770000,2
+Dusting surfaces,1767470400,3
+Wipe down the countertops,1792152000,0
+Sweep the kitchen floor,1770174000,0
+Wash hands,1769090400,4
+Fold laundry,1768140000,4
+Mop the living room floor,1789916400,1
+Scrub bathtub,1795302000,4
+Remove shoes,1795474800,1
+Play basketball,1778158800,2
+Hang clothes,1789016400,1
+Vacuum the bedroom floor,1796220000,0
+Read the book,1784131200,4
+Windex mirrors,1779004800,3
+Do assignments,1784134800,0
+Squeegeeing the windows,1775876400,4
+Talk with people,1798538400,1
+Read the Bible,1779397200,2
+Make tea,1778054400,1
+Sweep the kitchen floor,1772730000,3
+Sweep the living room,1775185200,1
+Take a bath,1785862800,0
+Play chess,1778248800,4
+Vacuum living room floor,1795410000,3
+Take a nap,1767387600,2
+Remove cobwebs,1785762000,3
+Wipe down the countertops,1790542800,0
+Play soccer,1790791200,1
+Read the Bible,1767495600,4
+Do laundry,1774749600,0
+Mop the living room floor,1771210800,2
+Read the Bible,1783537200,2
+Wipe down the countertops,1784610000,1
+Do assignments,1775433600,4
+Take a nap,1791025200,0
+Take a bath,1784678400,0
+Wash dishes,1798351200,0
+Fold laundry,1794740400,2
+Do assignments,1773442800,3
+Scrub sinks,1772157600,2
+Go to sleep,1785409200,1
+Play chess,1788793200,4
+Dusting surfaces,1782068400,1
+Sweep the kitchen floor,1788224400,3
+Unload the dishwasher,1770044400,0
+Mop the bathroom floor,1787778000,2
+Make tea,1769259600,4
+Read the Bible,1769130000,0
+Go to sleep,1769400000,4
+Mop the living room floor,1791118800,2
+Do laundry,1786532400,3
+Read the book,1789426800,2
+Dusting surfaces,1789128000,4
+Read the Bible,1796104800,3
+Play soccer,1779656400,1
+Take out trash,1783821600,0
+Read the book,1779264000,2
+Take a bath,1770062400,1
+Sweep the kitchen floor,1770958800,2
+Make tea,1778626800,3
+Wash hands,1784188800,4
+Unload the dishwasher,1769475600,2
+Take a bath,1793156400,2
+Do assignments,1774065600,4
+Play chess,1779768000,3
+Talk with people,1767304800,4
+Windex mirrors,1783803600,0
+Talk with people,1786986000,3
+Remove cobwebs,1796374800,2
+Do laundry,1784977200,4
+Take a nap,1784152800,0
+Wash dishes,1779562800,4
+Vacuum the bedroom floor,1770710400,4
+Take a nap,1786568400,3
+Buy grocery,1767535200,3
+Vacuum the bedroom floor,1797274800,3
+Remove shoes,1787396400,3
+Take a nap,1783292400,2
+Make coffee,1770030000,1
+Load the dishwasher,1779717600,1
+Windex mirrors,1791738000,2
+Squeegeeing the windows,1785610800,2
+Wipe down the countertops,1798174800,2
+Wash hands,1780495200,3
+Go to sleep,1783195200,2
+Mop the living room floor,1774807200,0
+Make coffee,1791529200,2
+Take a nap,1769875200,2
+Replace hand towels,1793664000,2
+Dusting surfaces,1798513200,1
+Play basketball,1778014800,4
+Dusting surfaces,1773558000,0
+Remove cobwebs,1795615200,2
+Talk with people,1797062400,2
+Play basketball,1770195600,1
+Sweep the living room,1770998400,2
+Play video games,1784653200,4
+Play basketball,1773640800,2
+Play chess,1798452000,2
+Write in my journal,1769353200,0
+Fold laundry,1770048000,3
+Vacuum the bedroom floor,1770184800,3
+Take out trash,1773871200,2
+Remove shoes,1773396000,2
+Hang clothes,1791176400,1
+Remove shoes,1795615200,2
+Mop the bathroom floor,1781992800,1
+Sweep the living room,1770001200,3
+Take out trash,1775019600,2
+Mop the bathroom floor,1785358800,4
+Scrub bathtub,1782381600,0
+Do laundry,1769194800,3
+Mop the living room floor,1774396800,0
+Squeegeeing the windows,1797865200,1
+Sweep the kitchen floor,1786316400,0
+Remove shoes,1787000400,1
+Play basketball,1777806000,1
+Squeegeeing the windows,1786168800,0
+Play chess,1777327200,1
+Vacuum the bedroom floor,1783472400,2
+Fold laundry,1774843200,4
+Make coffee,1770829200,2
+Wipe down the countertops,1791036000,2
+Write in my journal,1782579600,4
+Fold laundry,1772226000,1
+Squeegeeing the windows,1785369600,3
+Take a bath,1768852800,3
+Play video games,1798588800,3
+Vacuum the bedroom floor,1786104000,3
+Read the book,1770336000,0
+Replace hand towels,1779296400,1
+Wash hands,1770800400,4
+Talk with people,1794103200,0
+Load the dishwasher,1794078000,0
+Mop the bathroom floor,1792242000,0
+Do laundry,1778104800,0
+Read the Bible,1772704800,0
+Load the dishwasher,1790481600,0
+Make tea,1772301600,3
+Sweep the kitchen floor,1778608800,2
+Scrub bathtub,1786161600,2
+Hang clothes,1784768400,3
+Squeegeeing the windows,1781233200,0
+Play basketball,1775606400,3
+Play video games,1787220000,1
+Load the dishwasher,1782468000,3
+Play chess,1775484000,3
+Do laundry,1794603600,3
+Scrub sinks,1768644000,0
+Play chess,1797206400,1
+Squeegeeing the windows,1798732800,0
+Do assignments,1772964000,1
+Squeegeeing the windows,1798574400,3
+Load the dishwasher,1774540800,2
+Go to sleep,1781280000,4
+Play chess,1783461600,1
+Play basketball,1797372000,4
+Play basketball,1781085600,2
+Sweep the living room,1785099600,3
+Remove cobwebs,1788408000,0
+Unload the dishwasher,1781676000,2
+Windex mirrors,1796644800,1
+Make coffee,1791601200,0
+Hang clothes,1794038400,0
+Buy grocery,1793174400,2
+Mop the bathroom floor,1783684800,0
+Squeegeeing the windows,1767355200,4
+Replace hand towels,1777532400,4
+Read the book,1772726400,4
+Do assignments,1785247200,0
+Play soccer,1774810800,3
+Vacuum living room floor,1790809200,4
+Squeegeeing the windows,1771174800,2
+Play chess,1775613600,1
+Replace hand towels,1767855600,4
+Vacuum living room floor,1767931200,4
+Sweep the kitchen floor,1776895200,3
+Wipe down the countertops,1777860000,2
+Make coffee,1768078800,1
+Vacuum living room floor,1769691600,0
+Dusting surfaces,1779235200,0
+Make tea,1780509600,0
+Do assignments,1790517600,2
+Go to sleep,1797199200,3
+Load the dishwasher,1785891600,4
+Read the book,1786489200,3
+Load the dishwasher,1785578400,1
+Play soccer,1785276000,4
+Scrub bathtub,1796112000,4
+Make coffee,1780747200,2
+Read the book,1786132800,2
+Hang clothes,1767236400,2
+Sweep the kitchen floor,1772661600,2
+Take out trash,1792004400,3
+Mop the bathroom floor,1798621200,3
+Sweep the living room,1796443200,0
+Remove shoes,1770076800,2
+Go to sleep,1771315200,1
+Sweep the kitchen floor,1767409200,1
+Read the Bible,1798207200,1
+Replace hand towels,1796821200,1
+Make coffee,1779796800,3
+Play basketball,1794531600,1
+Scrub sinks,1781002800,4
+Do assignments,1773972000,2
+Wash hands,1781366400,0
+Fold laundry,1785355200,0
+Remove cobwebs,1780992000,2
+Sweep the living room,1796644800,0
+Squeegeeing the windows,1779379200,0
+Read the Bible,1770116400,4
+Squeegeeing the windows,1783922400,1
+Read the book,1780981200,3
+Play video games,1783245600,3
+Play video games,1785423600,4
+Take a bath,1772074800,4
+Sweep the living room,1769421600,3
+Windex mirrors,1798034400,0
+Vacuum living room floor,1775800800,3
+Scrub bathtub,1797004800,3
+Scrub sinks,1774555200,4
+Squeegeeing the windows,1784390400,2
+Take a nap,1788944400,1
+Go to sleep,1768424400,3
+Make coffee,1777060800,2
+Vacuum the bedroom floor,1773572400,2
+Remove shoes,1780909200,2
+Wash hands,1790568000,4
+Take a nap,1792468800,1
+Take a nap,1783555200,4
+Scrub bathtub,1784106000,2
+Hang clothes,1768446000,0
+Play chess,1775160000,3
+Sweep the living room,1791266400,0
+Do laundry,1792065600,1
+Sweep the living room,1784469600,1
+Make coffee,1794214800,3
+Replace hand towels,1796760000,0
+Replace hand towels,1798624800,0
+Play chess,1791111600,3
+Read the book,1786824000,1
+Make coffee,1775995200,3
+Do assignments,1773414000,0
+Vacuum the bedroom floor,1767222000,3
+Talk with people,1773050400,4
+Write in my journal,1771120800,1
+Mop the bathroom floor,1773752400,0
+Take a nap,1776762000,3
+Sweep the kitchen floor,1797634800,1
+Make tea,1775739600,3
+Do laundry,1780826400,3
+Unload the dishwasher,1798117200,2
+Mop the bathroom floor,1782633600,2
+Vacuum living room floor,1787112000,3
+Take a nap,1789617600,3
+Hang clothes,1794740400,0
+Take a nap,1778950800,1
+Hang clothes,1789362000,2
+Fold laundry,1778641200,1
+Vacuum the bedroom floor,1793664000,4
+Write in my journal,1793732400,3
+Play chess,1783044000,2
+Take out trash,1772553600,1
+Scrub sinks,1787893200,0
+Play video games,1767751200,1
