@@ -5,7 +5,7 @@
 #include "undo.h"
 #include "txt_utils.h"
 
-#define VERSION "0.2.0-tagging"
+#define VERSION "1.0.0"
 
 void print_usage(char *prog_name) {
     printf("Usage: %s [OPTIONS]\n", prog_name);
