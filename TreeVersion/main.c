@@ -76,17 +76,17 @@ int main(int argc, char *argv[]) {
     struct Stack undo_stk;
     struct task_tree *root = NULL;
 
-    clock_t start, end;
-    double cpu_time_used;
+    // clock_t start, end;
+    // double cpu_time_used;
 
     Initialize_Stack(&undo_stk);
 
-    start = clock();
+    // start = clock();
     load_tasks(&root);
-    end = clock();
+    // end = clock();
 
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-    printf("Time taken to load tasks: %f seconds", cpu_time_used);
+    // cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    // printf("Time taken to load tasks: %f seconds", cpu_time_used);
 
     while (1) {
         printf("\n--- Task Management System ---\n");
@@ -166,12 +166,12 @@ int main(int argc, char *argv[]) {
 
                 while(getchar() != '\n');
 
-                start = clock();
+                // start = clock();
                 Insert(&temp, &root);
-                end = clock();
+                // end = clock();
 
-                cpu_time_used = (((double) (end - start)) / CLOCKS_PER_SEC);
-                printf("Time taken to insert task: %.6f seconds\n", cpu_time_used);
+                // cpu_time_used = (((double) (end - start)) / CLOCKS_PER_SEC);
+                // printf("Time taken to insert task: %.6f seconds\n", cpu_time_used);
                 printf("Task added to schedule!\n");
 
                 push(&undo_stk, temp);
@@ -183,12 +183,12 @@ int main(int argc, char *argv[]) {
 
                 task_to_delete = pop(&undo_stk);
 
-                start = clock();
+                // start = clock();
                 Deletion(&root, task_to_delete);
-                end = clock();
+                // end = clock();
 
-                cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-                printf("Time taken to delete task: %.6f seconds\n", cpu_time_used);
+                // cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+                // printf("Time taken to delete task: %.6f seconds\n", cpu_time_used);
 
                 remove_task(task_to_delete);
                 break;

@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-// const char *TASKS_FILE = "tasks.txt";
+const char *TASKS_FILE = "tasks.txt";
 
 // ========== For Testing ================
 // const char *TASKS_FILE = "100_tasks.txt";
@@ -12,7 +12,7 @@
 // const char *TASKS_FILE = "500_tasks.txt";
 // const char *TASKS_FILE = "1000_tasks.txt";
 // const char *TASKS_FILE = "10000_tasks.txt";
-const char *TASKS_FILE = "100000_tasks.txt";
+// const char *TASKS_FILE = "100000_tasks.txt";
 // =======================================
 
 
