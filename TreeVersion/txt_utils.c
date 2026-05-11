@@ -6,6 +6,15 @@
 
 const char *TASKS_FILE = "tasks.txt";
 
+// ========== For Testing ================
+// const char *TASKS_FILE = "100_tasks.txt";
+// const char *TASKS_FILE = "250_tasks.txt";
+// const char *TASKS_FILE = "500_tasks.txt";
+// const char *TASKS_FILE = "1000_tasks.txt";
+// const char *TASKS_FILE = "10000_tasks.txt";
+// const char *TASKS_FILE = "100000_tasks.txt";
+// =======================================
+
 
 void save_task(task new_task) {
     FILE *fileptr = fopen(TASKS_FILE, "a");
@@ -37,7 +46,7 @@ void remove_task(task task_to_remove) {
         long timestamp;
         int tag_num;
 
-        if ( sscanf(line, "%499[^,],%ld,%d", task_name, &timestamp, &tag_num) == 3 ) {
+        if ( sscanf(line, "%499[^,],%ld,%d", task_name, &timestamp, &tag_num) == 3 ) { // Gets the string in the line before the first comma
             if ( strcmp(task_name, task_to_remove.name) != 0 ) {
                 fprintf(temp, "%s,%ld,%d\n", task_name, (long)timestamp, tag_num);
             } else {
@@ -64,19 +73,21 @@ void load_tasks(struct task_tree **root) {
     }
 
     char line[1024];
+    int num_of_lines;
     while ( fgets(line, sizeof(line), fileptr ) ) {
 
         task inserted_task;
         long temp_deadline;
         int tag_num;
 
-        if ( sscanf(line, "%499[^,],%ld,%d", inserted_task.name, &temp_deadline, &inserted_task.tag) == 3 ) {
+        if ( sscanf(line, "%499[^,],%ld,%d", inserted_task.name, &temp_deadline, &inserted_task.tag) == 3 ) { // Gets the string in the line before the first comma
             inserted_task.deadline = (time_t)temp_deadline;
             Insert(&inserted_task, root);
-            printf("Tasks from file successfully loaded\n");
+            num_of_lines++;
         }
     }
 
+    printf("%d of tasks from file successfully loaded\n", num_of_lines);
     fclose(fileptr);
 }
 

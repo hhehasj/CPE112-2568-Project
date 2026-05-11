@@ -48,12 +48,6 @@ void display(struct task_tree *root, Tag filter) {
 
     int found = 0;
 
-    // char *readable_time = ctime(&root->tasks[i].deadline);
-    // // If filter is -1, show all tasks
-    // if (filter == -1 || root->tasks[i].tag == filter) {
-    //     printf("%s - Due: %s\n", root->tasks[i].name, readable_time);
-    //     found = 1;
-    // }
     traverse_tree(root, filter, &found);
 
     if (!found) printf("No tasks found for this category.\n");
@@ -82,8 +76,17 @@ int main(int argc, char *argv[]) {
     struct Stack undo_stk;
     struct task_tree *root = NULL;
 
+    // clock_t start, end;
+    // double cpu_time_used;
+
     Initialize_Stack(&undo_stk);
+
+    // start = clock();
     load_tasks(&root);
+    // end = clock();
+
+    // cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    // printf("Time taken to load tasks: %f seconds", cpu_time_used);
 
     while (1) {
         printf("\n--- Task Management System ---\n");
@@ -163,7 +166,12 @@ int main(int argc, char *argv[]) {
 
                 while(getchar() != '\n');
 
+                // start = clock();
                 Insert(&temp, &root);
+                // end = clock();
+
+                // cpu_time_used = (((double) (end - start)) / CLOCKS_PER_SEC);
+                // printf("Time taken to insert task: %.6f seconds\n", cpu_time_used);
                 printf("Task added to schedule!\n");
 
                 push(&undo_stk, temp);
@@ -172,8 +180,16 @@ int main(int argc, char *argv[]) {
                 break;
 
             case 2:
+
                 task_to_delete = pop(&undo_stk);
+
+                // start = clock();
                 Deletion(&root, task_to_delete);
+                // end = clock();
+
+                // cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+                // printf("Time taken to delete task: %.6f seconds\n", cpu_time_used);
+
                 remove_task(task_to_delete);
                 break;
 
