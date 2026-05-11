@@ -1,5 +1,6 @@
 #include "tree.h"
 #include <stdlib.h>
+#include <string.h>
 
 void Insert(task *new_task, struct task_tree **root){
     if ( *root == NULL ) {
@@ -23,7 +24,7 @@ void Insert(task *new_task, struct task_tree **root){
 }
 
 struct task_tree* inorder_successor(struct task_tree *root) {
-    while ( root->right != NULL ) {
+    while ( root && root->left != NULL ) {
         root = root->left;
     }
     return root;
@@ -41,19 +42,27 @@ void Deletion(struct task_tree **root, task to_remove) {
         Deletion(&(*root)->right, to_remove);
 
     } else {
+
+        if ( strcmp((*root)->tasks->name, to_remove.name) != 0 ) {
+            Deletion(&(*root)->right, to_remove);
+            return;
+        }
+
         if ( !(*root)->left ) {
             struct task_tree *temp = (*root)->right;
+            free((*root)->tasks);
             free(*root);
             *root = temp;
 
         } else if ( !(*root)->right ) {
             struct task_tree *temp = (*root)->left;
+            free((*root)->tasks);
             free(*root);
             *root = temp;
 
         } else {
             struct task_tree *temp = inorder_successor((*root)->right);
-            (*root)->tasks = temp->tasks;
+            *((*root)->tasks) = *(temp->tasks);
             Deletion(&(*root)->right, *(temp->tasks));
         }
     }

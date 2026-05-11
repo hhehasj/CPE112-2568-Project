@@ -152,17 +152,30 @@ int main(int argc, char *argv[]) {
 
                 while(getchar() != '\n');
 
+
+                start = clock();
                 Insert(temp, &tq);
+                end = clock();
+
+                cpu_time_used = (((double) (end - start)) / CLOCKS_PER_SEC);
+                printf("Time taken to insert task: %.6f seconds\n", cpu_time_used);
                 printf("Task added to schedule!\n");
 
                 push(&undo_stk, temp);
                 save_task(temp);
-
                 break;
 
             case 2:
+
                 task_to_delete = pop(&undo_stk);
+
+                start = clock();
                 Deletion(&tq, task_to_delete);
+                end = clock();
+
+                cpu_time_used = (((double) (end - start)) / CLOCKS_PER_SEC);
+                printf("Time taken to delete task: %f seconds\n", cpu_time_used);
+
                 remove_task(task_to_delete);
                 break;
 
