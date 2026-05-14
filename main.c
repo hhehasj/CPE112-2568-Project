@@ -15,7 +15,7 @@ void print_usage(char *prog_name) {
 }
 
 void print_version() {
-    printf("Task Scheduler Version: %s\n", VERSION);
+    printf("systemc Task Scheduler Version: %s\n", VERSION);
 }
 
 void display(task_queue *q, Tag filter) {
