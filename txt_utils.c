@@ -60,7 +60,6 @@ void remove_task(task task_to_remove) {
 
     remove(TASKS_FILE);
     rename("temp.txt", TASKS_FILE);
-
 }
 
 

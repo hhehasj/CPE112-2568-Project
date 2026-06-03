@@ -5,7 +5,7 @@
 #include "undo.h"
 #include "txt_utils.h"
 
-#define VERSION "1.0.0"
+#define VERSION "1.0.1"
 
 void print_usage(char *prog_name) {
     printf("Usage: %s [OPTIONS]\n", prog_name);
@@ -15,7 +15,7 @@ void print_usage(char *prog_name) {
 }
 
 void print_version() {
-    printf("Task Scheduler Version: %s\n", VERSION);
+    printf("systemc Task Scheduler Version: %s\n", VERSION);
 }
 
 void display(task_queue *q, Tag filter) {
