@@ -5,7 +5,7 @@
 
 void save_task(task new_task);
 void remove_task(task task_to_remove);
-void load_tasks(task_queue *q);
+int load_tasks(task_queue *q);
 void create_txtFile(FILE *fileptr);
 
 #endif

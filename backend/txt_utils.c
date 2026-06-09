@@ -4,7 +4,7 @@
 #include <string.h>
 #include <time.h>
 
-const char *TASKS_FILE = "../frontend/tasks.txt";
+const char *TASKS_FILE = "./tasks.txt";
 
 // ========== For Testing ================
 // const char *TASKS_FILE = "100_tasks.txt";
@@ -42,11 +42,11 @@ void remove_task(task task_to_remove) {
 
     char line[1024];
     while ( fgets(line, sizeof(line), original) ) {
-        char task_name[500];
+        char task_name[50];
         long timestamp;
         int tag_num;
 
-        if ( sscanf(line, "%499[^,],%ld,%d", task_name, &timestamp, &tag_num) == 3 ) {  // Grabs the string in the line until the first comma
+        if ( sscanf(line, "%49[^,],%ld,%d", task_name, &timestamp, &tag_num) == 3 ) {  // Grabs the string in the line until the first comma
             if ( strcmp(task_name, task_to_remove.name) != 0 ) {
                 fprintf(temp, "%s,%ld,%d\n", task_name, timestamp, tag_num);
             } else {
@@ -63,31 +63,33 @@ void remove_task(task task_to_remove) {
 }
 
 
-void load_tasks(task_queue *q) {
+int load_tasks(task_queue *q) {
     FILE *fileptr = fopen(TASKS_FILE, "r");
 
     if ( !fileptr ) {
         create_txtFile(fileptr);
-        return;
+        return -1;
     }
 
     char line[1024];
-    int num_of_lines;
+    int num_of_lines = 0;
     while ( fgets(line, sizeof(line), fileptr ) ) {
 
         task inserted_task;
         long temp_deadline;
         int tag_num;
 
-        if ( sscanf(line, "%499[^,],%ld,%d", inserted_task.name, &temp_deadline, &inserted_task.tag) == 3 ) { // Gets the string in the line until the first comma
+        if ( fscanf(fileptr, "%49[^,],%ld,%d", inserted_task.name, &temp_deadline, &inserted_task.tag) == 3 ) { // Gets the string in the line until the first comma
             num_of_lines++;
             inserted_task.deadline = (time_t)temp_deadline;
             Insert(inserted_task, q);
         }
     }
 
-    printf("%d of tasks from file successfully loaded\n", num_of_lines);
+    // printf("%d of tasks from file successfully loaded\n", num_of_lines);
     fclose(fileptr);
+
+    return num_of_lines;
 }
 
 void create_txtFile(FILE *fileptr) {

@@ -4,7 +4,7 @@ import ctypes as cty
 class Task(cty.Structure):
     _fields_ = [
         ("name", cty.c_char * 50),
-        ("deadline", cty.c_long),
+        ("deadline", cty.c_int64),
         ("tag", cty.c_int),
     ]
 
@@ -65,3 +65,17 @@ backend.remove_task.restype = None
 backend.load_tasks.argtypes = [cty.POINTER(Task_queue)]
 backend.load_tasks.restype = cty.c_int
 # ------------------------------------------
+
+
+def load_all_tasks_from_c():
+    queue = Task_queue()
+    backend.Initialize(cty.byref(queue))
+
+    num_loaded = backend.load_tasks(cty.byref(queue))
+
+    tasks_list: list[Task] = []
+    if num_loaded > 0 and queue.tasks:
+        for i in range(queue.size):
+            tasks_list.append(queue.tasks[i])
+
+    return tasks_list
