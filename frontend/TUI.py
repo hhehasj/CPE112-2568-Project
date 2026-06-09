@@ -1,109 +1,147 @@
-from time import monotonic
+import datetime
 
+import c_process
+import textual.widgets as widgets
 from textual.app import App, ComposeResult
-from textual.containers import HorizontalGroup, VerticalScroll
-from textual.reactive import reactive
-from textual.widgets import Button, Digits, Footer, Header
+from textual.containers import HorizontalGroup, Vertical, VerticalScroll
+from textual.screen import ModalScreen
 
 
-class TimeDisplay(Digits):
-    """A widget to display elapsed time."""
-
-    start_time = reactive(monotonic)
-    time = reactive(0.0)
-    total = reactive(0.0)
-
-    def on_mount(self) -> None:
-        """Event handler called when widget is added to the app."""
-        self.update_timer = self.set_interval(1 / 60, self.update_time, pause=True)
-
-    def update_time(self) -> None:
-        """Method to update time to current."""
-        self.time = self.total + (monotonic() - self.start_time)
-
-    def watch_time(self, time: float) -> None:
-        """Called when the time attribute changes."""
-        minutes, seconds = divmod(time, 60)
-        hours, minutes = divmod(minutes, 60)
-        self.update(f"{hours:02,.0f}:{minutes:02.0f}:{seconds:05.2f}")
-
-    def start(self) -> None:
-        """Method to start (or resume) time updating."""
-        self.start_time = monotonic()
-        self.update_timer.resume()
-
-    def stop(self):
-        """Method to stop the time display updating."""
-        self.update_timer.pause()
-        self.total += monotonic() - self.start_time
-        self.time = self.total
-
-    def reset(self):
-        """Method to reset the time display to zero."""
-        self.total = 0
-        self.time = 0
-
-
-class Stopwatch(HorizontalGroup):
-    """A stopwatch widget."""
-
-    def on_button_pressed(self, event: Button.Pressed) -> None:
-        """Event handler called when a button is pressed."""
-        button_id = event.button.id
-        time_display = self.query_one(TimeDisplay)
-        if button_id == "start":
-            time_display.start()
-            self.add_class("started")
-        elif button_id == "stop":
-            time_display.stop()
-            self.remove_class("started")
-        elif button_id == "reset":
-            time_display.reset()
+class TaskInputScreen(ModalScreen):
+    BINDINGS = [("escape", "cancel", "Cancel")]
 
     def compose(self) -> ComposeResult:
-        """Create child widgets of a stopwatch."""
-        yield Button("Start", id="start", variant="success")
-        yield Button("Stop", id="stop", variant="error")
-        yield Button("Reset", id="reset")
-        yield TimeDisplay()
+        yield Vertical(
+            widgets.Input(
+                placeholder="Enter task name",
+                type="text",
+                max_length=50,
+                id="name_input",
+            ),
+            widgets.Input(
+                placeholder="Month/Day/Year Hour (e.g., 10/24/2026 14)",
+                id="date_input",
+            ),
+            widgets.Input(
+                placeholder="Tags: 0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School",
+                restrict=r"[0-4]?",
+                max_length=1,
+                id="tag_input",
+            ),
+        )
+
+    def action_cancel(self) -> None:
+        self.dismiss(None)
+
+    def on_input_submitted(self, event: widgets.Input.Submitted) -> None:
+        name_input: widgets.Input = self.query_one("#name_input", widgets.Input)
+        date_input: widgets.Input = self.query_one("#date_input", widgets.Input)
+        tag_input: widgets.Input = self.query_one("#tag_input", widgets.Input)
+
+        try:
+            raw_date = date_input.value.strip()
+            parse_date = datetime.datetime.strptime(raw_date, "%m/%d/%Y %H")
+            timestamp = int(parse_date.timestamp())
+
+        except ValueError:
+            timestamp = 0
+
+        new_task = [name_input.value, timestamp, int(tag_input.value)]
+
+        self.dismiss(new_task)
 
 
-class StopwatchApp(App):
-    """A Textual app to manage stopwatches."""
+class Task(HorizontalGroup):
+    def __init__(self, c_task):
+        super().__init__()
+        self.task_name = c_task.name.decode("utf-8", errors="ignore")
 
-    CSS_PATH = "stopwatch.tcss"
+        try:
+            self.deadline = datetime.datetime.fromtimestamp(c_task.deadline).strftime(
+                "%m/%d/%Y %H:00"
+            )
 
+        except Exception:
+            self.deadline = "No deadline"
+
+        self.tag = c_task.tag
+
+    def compose(self) -> ComposeResult:
+        yield widgets.Label(f"{self.tag}", id="tag_lbl", classes="task_lbl")
+        yield widgets.Label(self.task_name, id="name_lbl", classes="task_lbl")
+        yield widgets.Label(self.deadline, id="date_lbl", classes="task_lbl")
+
+
+class SystemC(App):
+    CSS_PATH = "TUI.tcss"
     BINDINGS = [
         ("d", "toggle_dark", "Toggle dark mode"),
-        ("a", "add_stopwatch", "Add"),
-        ("r", "remove_stopwatch", "Remove"),
+        ("n", "add_task", "New Task"),
+        ("u", "undo_task", "UNDO"),
+        ("s", "tag_search", "Search by Tag"),
+        ("q", "exit", "Exit"),
     ]
 
     def compose(self) -> ComposeResult:
-        """Called to add widgets to the app."""
-        yield Header()
-        yield Footer()
-        yield VerticalScroll(Stopwatch(), Stopwatch(), Stopwatch(), id="timers")
+        yield widgets.Header()
+        yield widgets.Footer()
+        yield VerticalScroll(id="vert")
 
-    def action_add_stopwatch(self) -> None:
-        """An action to add a timer."""
-        new_stopwatch = Stopwatch()
-        self.query_one("#timers").mount(new_stopwatch)
-        new_stopwatch.scroll_visible()
+    def on_mount(
+        self,
+    ) -> None:  # on_mount is for stuff to happen immediately when the program starts
+        try:
+            c_tasks = c_process.load_all_tasks_from_c()
+            vertical_scroll = self.query_one(
+                "#vert", VerticalScroll
+            )  # Find element with id="vert"
 
-    def action_remove_stopwatch(self) -> None:
-        """Called to remove a timer."""
-        timers = self.query("Stopwatch")
-        if timers:
-            timers.last().remove()
+            if c_tasks:
+                for task_item in c_tasks:
+                    vertical_scroll.mount(Task(task_item))
+
+            else:
+                self.notify("No tasks found or tasks.txt is missing.\n")
+
+        except Exception as e:
+            self.notify(f"Failed to load backend tasks: {e}", severity="error")
 
     def action_toggle_dark(self) -> None:
-        """An action to toggle dark mode."""
         self.theme = (
             "textual-dark" if self.theme == "textual-light" else "textual-light"
         )
 
+    def action_add_task(self) -> None:
+        def check_input(task_data: list | None):
+            if not task_data:  # if user pressed Escape
+                return
+
+            else:
+                task_name, task_timestamp, task_tag = task_data
+
+                c_task = c_process.Task(
+                    name=task_name.encode("utf-8"),
+                    deadline=task_timestamp,
+                    tag=task_tag,
+                )
+
+                c_process.backend.save_task(c_task)
+
+                vertical_scroll = self.query_one("#vert", VerticalScroll)
+                vertical_scroll.mount(Task(c_task))
+
+                self.notify(f'Added "{task_name}" successfully!\n')
+
+        self.push_screen(TaskInputScreen(), check_input)
+
+    # def action_undo_task(self) -> None: ...
+
+    # def action_search_task(self) -> None: ...
+
+    def action_exit(self) -> None:
+        self.exit()
+
 
 if __name__ == "__main__":
-    app = StopwatchApp()
+    app = SystemC()
     app.run()
