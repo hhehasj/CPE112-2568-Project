@@ -10,45 +10,70 @@ from textual.screen import ModalScreen
 class TaskInputScreen(ModalScreen):
     BINDINGS = [("escape", "cancel", "Cancel")]
 
+    def __init__(self, add_or_search: int):
+        super().__init__()
+
+        self.add_or_search = add_or_search
+
     def compose(self) -> ComposeResult:
-        yield Vertical(
-            widgets.Input(
-                placeholder="Enter task name",
-                type="text",
-                max_length=50,
-                id="name_input",
-            ),
-            widgets.Input(
-                placeholder="Month/Day/Year Hour (e.g., 10/24/2026 14)",
-                id="date_input",
-            ),
-            widgets.Input(
-                placeholder="Tags: 0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School",
-                restrict=r"[0-4]?",
-                max_length=1,
-                id="tag_input",
-            ),
-        )
+        match self.add_or_search:
+            case 1:
+                yield Vertical(
+                    widgets.Input(
+                        placeholder="Enter task name",
+                        type="text",
+                        max_length=50,
+                        id="name_input",
+                    ),
+                    widgets.Input(
+                        placeholder="Month/Day/Year Hour (e.g., 10/24/2026 14)",
+                        id="date_input",
+                    ),
+                    widgets.Input(
+                        placeholder="Tags: 0. Uncategorized, 1. Work, 2. Home, 3. Personal, 4. School",
+                        restrict=r"[0-4]?",
+                        max_length=1,
+                        id="tag_input",
+                    ),
+                )
+
+            case 2:
+                yield Vertical(
+                    widgets.Input(
+                        placeholder="Enter tag you want to see",
+                        type="integer",
+                        max_length=50,
+                        id="search_tag_input",
+                    )
+                )
 
     def action_cancel(self) -> None:
         self.dismiss(None)
 
     def on_input_submitted(self, event: widgets.Input.Submitted) -> None:
-        name_input: widgets.Input = self.query_one("#name_input", widgets.Input)
-        date_input: widgets.Input = self.query_one("#date_input", widgets.Input)
-        tag_input: widgets.Input = self.query_one("#tag_input", widgets.Input)
+        match self.add_or_search:
+            case 1:
+                name_input: widgets.Input = self.query_one("#name_input", widgets.Input)
+                date_input: widgets.Input = self.query_one("#date_input", widgets.Input)
+                tag_input: widgets.Input = self.query_one("#tag_input", widgets.Input)
 
-        try:
-            raw_date = date_input.value.strip()
-            parse_date = datetime.datetime.strptime(raw_date, "%m/%d/%Y %H")
-            timestamp = int(parse_date.timestamp())
+                try:
+                    raw_date = date_input.value.strip()
+                    parse_date = datetime.datetime.strptime(raw_date, "%m/%d/%Y %H")
+                    timestamp = int(parse_date.timestamp())
 
-        except ValueError:
-            timestamp = 0
+                except ValueError:
+                    timestamp = 0
 
-        new_task = [name_input.value, timestamp, int(tag_input.value)]
+                new_task = [name_input.value, timestamp, int(tag_input.value)]
 
-        self.dismiss(new_task)
+                self.dismiss(new_task)
+
+            case 2:
+                search_tag_input: widgets.Input = self.query_one(
+                    "#search_tag_input", widgets.Input
+                )
+                self.dismiss(search_tag_input.value)
 
 
 class Task(HorizontalGroup):
@@ -79,6 +104,7 @@ class SystemC(App):
         ("n", "add_task", "New Task"),
         ("u", "undo_task", "UNDO"),
         ("s", "tag_search", "Search by Tag"),
+        ("ctrl+r", "refresh", "Refresh"),
         ("q", "exit", "Exit"),
     ]
 
@@ -101,7 +127,9 @@ class SystemC(App):
                     vertical_scroll.mount(Task(task_item))
 
             else:
-                self.notify("No tasks found or tasks.txt is missing.\n")
+                self.notify(
+                    "No tasks found or tasks.txt is missing.\n", severity="error"
+                )
 
         except Exception as e:
             self.notify(f"Failed to load backend tasks: {e}", severity="error")
@@ -134,17 +162,16 @@ class SystemC(App):
 
             self.notify(f'Added "{task_name}" successfully!\n')
 
-        self.push_screen(TaskInputScreen(), check_input)
+        self.push_screen(TaskInputScreen(1), check_input)
 
     def action_undo_task(self) -> None:
-        popped: proc.Task = proc.backend.pop(proc.stack)
 
+        popped: proc.Task = proc.backend.pop(proc.stack)
         popped_name: str = popped.name.decode(
             "utf-8", errors="ignore"
         ).strip()  # Bytes into String
 
         vertical_scroll: VerticalScroll = self.query_one("#vert", VerticalScroll)
-
         task_widgets = vertical_scroll.query(Task)
 
         widget_removed: bool = False
@@ -161,15 +188,65 @@ class SystemC(App):
                 self.notify(f"Removed '{popped_name}")
 
             else:
-                self.notify(f"Couldn't remove '{popped_name}'")
+                self.notify(f"Couldn't remove '{popped_name}'", severity="error")
 
         except IndexError:
-            self.notify("Stack is empty")
+            self.notify("Stack is empty", severity="error")
 
         proc.backend.remove_task(popped)
         proc.backend.Deletion(proc.queue, popped)
 
-    # def action_search_task(self) -> None:
+    def action_tag_search(self) -> None:
+        def processing_tags(to_search: str | None):
+
+            if not to_search:
+                return
+            else:
+                to_search: int = int(to_search.strip())
+
+            vertical_scroll: VerticalScroll = self.query_one("#vert", VerticalScroll)
+            task_widgets = vertical_scroll.query(Task)
+
+            found_any = False
+            for widget in task_widgets:
+                if widget.tag == to_search:
+                    found_any = True
+                    widget.display = True
+
+                else:
+                    widget.display = False
+
+            if found_any:
+                self.notify(f"Showing tasks with tag {to_search}")
+            else:
+                self.notify(f"No tasks found with tag {to_search}", severity="error")
+
+        self.push_screen(TaskInputScreen(2), processing_tags)
+
+    def action_refresh(self) -> None:
+
+        vertical_scroll: VerticalScroll = self.query_one("#vert", VerticalScroll)
+
+        # Remove the old widgets
+        vertical_scroll.remove_children()
+
+        # Retrieve updated list of tasks
+        try:
+            c_tasks = proc.load_all_tasks_from_c()
+
+            if c_tasks:
+                for task_item in c_tasks:
+                    vertical_scroll.mount(Task(task_item))
+
+                self.notify("UI Refreshed")
+
+            else:
+                self.notify(
+                    "No tasks found or tasks.txt is missing.\n", severity="error"
+                )
+
+        except Exception:
+            self.notify("Refreshed Failed", severity="error")
 
     def action_exit(self) -> None:
         proc.free_queue_stack()
