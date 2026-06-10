@@ -24,7 +24,7 @@ void save_task(task new_task) {
         return;
     }
 
-    printf("Saved to file: %s\n", new_task.name);
+    // printf("Saved to file: %s\n", new_task.name);
     fprintf(fileptr, "%s,%ld,%d\n", new_task.name, (long)new_task.deadline, new_task.tag);
 
     fclose(fileptr);
@@ -50,7 +50,7 @@ void remove_task(task task_to_remove) {
             if ( strcmp(task_name, task_to_remove.name) != 0 ) {
                 fprintf(temp, "%s,%ld,%d\n", task_name, timestamp, tag_num);
             } else {
-                printf("Removed from file: %s\n", task_name);
+                // printf("Removed from file: %s\n", task_name);
             }
         }
     }
@@ -79,7 +79,7 @@ int load_tasks(task_queue *q) {
         long temp_deadline;
         int tag_num;
 
-        if ( fscanf(fileptr, "%49[^,],%ld,%d", inserted_task.name, &temp_deadline, &inserted_task.tag) == 3 ) { // Gets the string in the line until the first comma
+        if ( sscanf(line, "%49[^,],%ld,%d", inserted_task.name, &temp_deadline, &inserted_task.tag) == 3 ) { // Gets the string in the line until the first comma
             num_of_lines++;
             inserted_task.deadline = (time_t)temp_deadline;
             Insert(inserted_task, q);

@@ -1,6 +1,6 @@
 import datetime
 
-import c_process
+import c_process as proc
 import textual.widgets as widgets
 from textual.app import App, ComposeResult
 from textual.containers import HorizontalGroup, Vertical, VerticalScroll
@@ -54,7 +54,7 @@ class TaskInputScreen(ModalScreen):
 class Task(HorizontalGroup):
     def __init__(self, c_task):
         super().__init__()
-        self.task_name = c_task.name.decode("utf-8", errors="ignore")
+        self.task_name = c_task.name.decode("utf-8", errors="ignore").strip()
 
         try:
             self.deadline = datetime.datetime.fromtimestamp(c_task.deadline).strftime(
@@ -91,7 +91,7 @@ class SystemC(App):
         self,
     ) -> None:  # on_mount is for stuff to happen immediately when the program starts
         try:
-            c_tasks = c_process.load_all_tasks_from_c()
+            c_tasks = proc.load_all_tasks_from_c()
             vertical_scroll = self.query_one(
                 "#vert", VerticalScroll
             )  # Find element with id="vert"
@@ -116,29 +116,63 @@ class SystemC(App):
             if not task_data:  # if user pressed Escape
                 return
 
-            else:
-                task_name, task_timestamp, task_tag = task_data
+            task_name, task_timestamp, task_tag = task_data
 
-                c_task = c_process.Task(
-                    name=task_name.encode("utf-8"),
-                    deadline=task_timestamp,
-                    tag=task_tag,
-                )
+            c_task = proc.Task(
+                name=task_name.encode("utf-8"),
+                deadline=task_timestamp,
+                tag=task_tag,
+            )
 
-                c_process.backend.save_task(c_task)
+            # backend processing
+            proc.backend.save_task(c_task)
+            proc.backend.Insert(c_task, proc.queue)
+            proc.backend.push(proc.stack, c_task)
 
-                vertical_scroll = self.query_one("#vert", VerticalScroll)
-                vertical_scroll.mount(Task(c_task))
+            vertical_scroll = self.query_one("#vert", VerticalScroll)
+            vertical_scroll.mount(Task(c_task))
 
-                self.notify(f'Added "{task_name}" successfully!\n')
+            self.notify(f'Added "{task_name}" successfully!\n')
 
         self.push_screen(TaskInputScreen(), check_input)
 
-    # def action_undo_task(self) -> None: ...
+    def action_undo_task(self) -> None:
+        popped: proc.Task = proc.backend.pop(proc.stack)
 
-    # def action_search_task(self) -> None: ...
+        popped_name: str = popped.name.decode(
+            "utf-8", errors="ignore"
+        ).strip()  # Bytes into String
+
+        vertical_scroll: VerticalScroll = self.query_one("#vert", VerticalScroll)
+
+        task_widgets = vertical_scroll.query(Task)
+
+        widget_removed: bool = False
+        i: int = 0
+        try:
+            while not widget_removed:
+                if task_widgets[i].task_name == popped_name:
+                    task_widgets[i].remove()
+                    widget_removed = True
+                    break
+                i += 1
+
+            if widget_removed:
+                self.notify(f"Removed '{popped_name}")
+
+            else:
+                self.notify(f"Couldn't remove '{popped_name}'")
+
+        except IndexError:
+            self.notify("Stack is empty")
+
+        proc.backend.remove_task(popped)
+        proc.backend.Deletion(proc.queue, popped)
+
+    # def action_search_task(self) -> None:
 
     def action_exit(self) -> None:
+        proc.free_queue_stack()
         self.exit()
 
 

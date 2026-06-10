@@ -66,12 +66,16 @@ backend.load_tasks.argtypes = [cty.POINTER(Task_queue)]
 backend.load_tasks.restype = cty.c_int
 # ------------------------------------------
 
+queue = Task_queue()
+backend.Initialize(cty.byref(queue))
+
+stack = Stack()
+backend.Initialize_Stack(cty.byref(stack))
+
 
 def load_all_tasks_from_c():
-    queue = Task_queue()
-    backend.Initialize(cty.byref(queue))
-
     num_loaded = backend.load_tasks(cty.byref(queue))
+    print(num_loaded)
 
     tasks_list: list[Task] = []
     if num_loaded > 0 and queue.tasks:
@@ -79,3 +83,8 @@ def load_all_tasks_from_c():
             tasks_list.append(queue.tasks[i])
 
     return tasks_list
+
+
+def free_queue_stack():
+    backend.Free_Queue(cty.byref(queue))
+    backend.Free_Stack(cty.byref(stack))

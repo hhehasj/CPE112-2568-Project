@@ -42,7 +42,7 @@ void Insert(task new_task, task_queue *q){
 
 int Deletion(task_queue *q, task to_remove) {
     if ( q->size == 0 ) {
-        printf("Task Queue Empty\n");
+        // printf("Task Queue Empty\n");
         return -1;
     }
 
@@ -50,7 +50,7 @@ int Deletion(task_queue *q, task to_remove) {
 
     for (int i=0; i<q->size; i++ ) {
         if ( strcmp(q->tasks[i].name, to_remove.name) == 0 ) {
-            printf("Task: %s (has been deleted)\n", q->tasks[i].name);
+            // printf("Task: %s (has been deleted)\n", q->tasks[i].name);
 
             for(int j=i; j<q->size-1; j++) {
                 q->tasks[j] = q->tasks[j+1];
