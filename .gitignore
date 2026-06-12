@@ -8,3 +8,4 @@ txt_utils.o
 systemc
 tasks.txt
 systemTree
+.\frontend\__pycache__\c_process.cpython-312.py
