@@ -100,11 +100,10 @@ class Task(HorizontalGroup):
 class SystemC(App):
     CSS_PATH = "TUI.tcss"
     BINDINGS = [
-        ("d", "toggle_dark", "Toggle dark mode"),
         ("n", "add_task", "New Task"),
         ("u", "undo_task", "UNDO"),
         ("s", "tag_search", "Search by Tag"),
-        ("ctrl+r", "refresh", "Refresh"),
+        ("ctrl+r", "reveal", "Reveal"),
         ("q", "exit", "Exit"),
     ]
 
@@ -134,11 +133,6 @@ class SystemC(App):
         except Exception as e:
             self.notify(f"Failed to load backend tasks: {e}", severity="error")
 
-    def action_toggle_dark(self) -> None:
-        self.theme = (
-            "textual-dark" if self.theme == "textual-light" else "textual-light"
-        )
-
     def action_add_task(self) -> None:
         def check_input(task_data: list | None):
             if not task_data:  # if user pressed Escape
@@ -146,26 +140,37 @@ class SystemC(App):
 
             task_name, task_timestamp, task_tag = task_data
 
-            c_task = proc.Task(
+            new_c_task = proc.Task(
                 name=task_name.encode("utf-8"),
                 deadline=task_timestamp,
                 tag=task_tag,
             )
 
             # backend processing
-            proc.backend.save_task(c_task)
-            proc.backend.Insert(c_task, proc.queue)
-            proc.backend.push(proc.stack, c_task)
+            proc.backend.save_task(new_c_task)
+            proc.backend.Insert(new_c_task, proc.queue)
+            proc.backend.push(proc.stack, new_c_task)
 
-            vertical_scroll = self.query_one("#vert", VerticalScroll)
-            vertical_scroll.mount(Task(c_task))
+            vertical_scroll: VerticalScroll = self.query_one("#vert", VerticalScroll)
+            task_widgets = vertical_scroll.query(Task)
+            new_Task: Task = Task(new_c_task)
 
-            self.notify(f'Added "{task_name}" successfully!\n')
+            # Ensuring the new task is placed correctly
+            inserted: bool = False
+            for widget in task_widgets:
+                if new_Task.deadline < widget.deadline:
+                    vertical_scroll.mount(new_Task, before=widget)
+                    inserted = True
+                    break
+
+            if not inserted:
+                vertical_scroll.mount(new_Task)
+
+            self.notify(f'Added "{task_name}" successfully!')
 
         self.push_screen(TaskInputScreen(1), check_input)
 
     def action_undo_task(self) -> None:
-
         popped: proc.Task = proc.backend.pop(proc.stack)
         popped_name: str = popped.name.decode(
             "utf-8", errors="ignore"
@@ -223,34 +228,20 @@ class SystemC(App):
 
         self.push_screen(TaskInputScreen(2), processing_tags)
 
-    def action_refresh(self) -> None:
-
+    def action_reveal(self) -> None:
         vertical_scroll: VerticalScroll = self.query_one("#vert", VerticalScroll)
 
-        # Remove the old widgets
-        vertical_scroll.remove_children()
-
-        # Retrieve updated list of tasks
-        try:
-            c_tasks = proc.load_all_tasks_from_c()
-
-            if c_tasks:
-                for task_item in c_tasks:
-                    vertical_scroll.mount(Task(task_item))
-
-                self.notify("UI Refreshed")
-
-            else:
-                self.notify(
-                    "No tasks found or tasks.txt is missing.\n", severity="error"
-                )
-
-        except Exception:
-            self.notify("Refreshed Failed", severity="error")
+        for widget in vertical_scroll.children:
+            widget.display = True
 
     def action_exit(self) -> None:
         proc.free_queue_stack()
         self.exit()
+
+    def action_toggle_dark(self) -> None:
+        self.theme = (
+            "textual-dark" if self.theme == "textual-light" else "textual-light"
+        )
 
 
 if __name__ == "__main__":
