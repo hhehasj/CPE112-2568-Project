@@ -21,7 +21,7 @@ void push(struct Stack *stk, task newTask) {
         stk->tasks = (task*)realloc(stk->tasks, stk->capacity * sizeof(task));
 
         if (stk->tasks == NULL) {
-            printf("Memory reallocation failed!\n");
+            // printf("Memory reallocation failed!\n");
             return;
         }
     }
@@ -32,7 +32,7 @@ void push(struct Stack *stk, task newTask) {
 
 task pop(struct Stack *stk) {
     if ( stk->top == -1 ) {
-        printf("Stack Underflow\n");
+        // printf("Stack Underflow\n");
         task empty = {.deadline = 0, .name = "", .tag = UNCAT};
         return empty;
     }

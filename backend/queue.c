@@ -20,7 +20,7 @@ void Insert(task new_task, task_queue *q){
         q->tasks = (task*)realloc(q->tasks, q->capacity * sizeof(task));
 
         if (q->tasks == NULL) {
-            printf("Memory reallocation failed!\n");
+            // printf("Memory reallocation failed!\n");
             return;
         }
     }
